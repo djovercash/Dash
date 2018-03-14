@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :hometown, :password_digest, :friends, :events
+  attributes :id, :name, :email, :photo, :hometown, :password_digest, :friends, :events
 
   def friends
     friend_category = []
