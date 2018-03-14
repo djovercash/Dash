@@ -1,0 +1,2 @@
+class FriendCategoriesController < ApplicationController
+end
