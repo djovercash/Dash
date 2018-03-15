@@ -1,6 +1,8 @@
 import eventApi from '../services/eventApi'
 
-export const ADD_EVENT = "ADD_EVENT"
+export const CREATE_EVENT = "CREATE_EVENT"
+export const ADDING_EVENT = "ADDING_EVENT"
+export const ADDED_EVENT = "ADDED_EVENT"
 export const FETCHING_EVENT = "FETCHING_EVENT"
 export const FETCHED_EVENT = "FETCHED_EVENT"
 export const FETCHING_EVENTS = "FETCHING_EVENTS"
@@ -30,9 +32,20 @@ export function fetchEvent(id) {
   }
 }
 
-export function addEvent(event) {
+export function createEvent() {
   return {
-    type: ADD_EVENT,
-    payload: event
+    type: CREATE_EVENT
+  }
+}
+
+export function addEvent(event) {
+  return function(dispatch) {
+    dispatch({ type: ADDING_EVENT })
+    eventApi.createEvent(event).then(event => {
+      dispatch({
+        type: ADDED_EVENT,
+        payload: event
+      })
+    })
   }
 }

@@ -10,7 +10,7 @@ class EventSerializer < ActiveModel::Serializer
       custom_user = user.attributes
 
       custom_user[:name] = user.name
-      custom_user[:invite] = user.invites.select{|invite| invite.event_id == object.id}
+      custom_user[:invites] = user.invites.select{|invite| invite.event_id == object.id}
 
       user_invites.push(custom_user)
     end

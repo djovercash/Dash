@@ -2,27 +2,28 @@
 // import eventReducer from './eventReducer'
 // import {combineReducers} from 'redux'
 
-import {FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS} from '../actions/events'
+import {CREATE_EVENT, ADDING_EVENT, ADDED_EVENT, FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS} from '../actions/events'
 import {FETCHING_USER, FETCHED_USER} from '../actions/users'
 //
 const defaultState = {
   user: {name: '', email: '', photo: '', hometown: '', password_digest: '',
     friends: [{name: '', email: '', photo: '', hometown: '', password_digest: '', friend_category: []}],
     events: [{title: '', location: '', description: '', start_time: '', end_time: '',
-      invite: [{user_id: null, event_id: null, admin: null, status: '', host: null }]
+      invites: [{user_id: null, event_id: null, admin: null, status: '', host: null }]
     }]
   },
   events: [{title: '', location: '', description: '', start_time: '', end_time: '',
     users: [{name: '', email: '', photo: '', hometown: '', password_digest: '',
-      invite: [{user_id: null, event_id: null, admin: null, status: '', host: null }]
+      invites: [{user_id: null, event_id: null, admin: null, status: '', host: null }]
     }]
   }],
   specific_event: {title: '', location: '', description: '', start_time: '', end_time: '',
     users: [{name: '', email: '', photo: '', hometown: '', password_digest: '',
-      invite: [{user_id: null, event_id: null, admin: null, status: '', host: null }]
+      invites: [{user_id: null, event_id: null, admin: null, status: '', host: null }]
     }]
   },
-  isLoading: false
+  isLoading: false,
+  eventForm: false
 }
 
 function rootReducer (state = defaultState, action) {
@@ -30,7 +31,16 @@ function rootReducer (state = defaultState, action) {
     case FETCHING_USER:
         return {...state, isLoading: true};
     case FETCHED_USER:
+        console.log(action.payload)
         return {...state, user: action.payload, isLoading: false};
+    case CREATE_EVENT:
+        return {...state, eventForm: true};
+    case ADDING_EVENT:
+        return {...state, isLoading: true, eventForm: false};
+    case ADDED_EVENT:
+        console.log(state.user.events)
+        console.log(action.payload)
+        return {...state, user: {...state.user, events: [...state.user.events, {description: action.payload.description, end_time: action.payload.end_time, id: action.payload.id, invites: [action.payload.users[0].invites], location: action.payload.location, start_time: action.payload.start_time,}]}, events: [...state.events, action.payload], isLoading: false, specific_event: action.payload}
     case FETCHING_EVENTS:
         return {...state, isLoading: true};
     case FETCHED_EVENTS:

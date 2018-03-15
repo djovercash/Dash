@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchEvent } from '../actions/events'
+import { fetchEvent, createEvent} from '../actions/events'
 
 
 const UserAvatar = (props) => {
@@ -15,7 +15,7 @@ const UserAvatar = (props) => {
 
   const FilterEvents = (events) => {
     const filterEvents = events.filter(event => {
-      return event.invite[0].status === "confirmed"
+      return event.invites[0].status === "confirmed"
     })
     return filterEvents
   }
@@ -26,6 +26,10 @@ const UserAvatar = (props) => {
 
   const findEvent = (id) => {
     props.fetchEvent(id)
+  }
+
+  const createEvent = () => {
+    props.createEvent()
   }
 
 
@@ -43,9 +47,11 @@ const UserAvatar = (props) => {
           return <h5 onClick={() => {findEvent(event.id)}} key={event.id}>{event.title}</h5>
         })}
       </div>
+      <button onClick={createEvent}>Create Event</button>
     </div>
   )
 }
+
 
 function mapStateToProps(state) {
   return {
@@ -53,10 +59,5 @@ function mapStateToProps(state) {
   }
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     fetchEvent: fetchEvent
-//   }
-// }
 
-export default connect(mapStateToProps, { fetchEvent })(UserAvatar)
+export default connect(mapStateToProps, { fetchEvent, createEvent })(UserAvatar)

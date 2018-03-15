@@ -1,12 +1,13 @@
 import React from 'react'
 import moment from 'moment'
+import UserCreateEventForm from '../components/UserCreateEventForm'
 import { connect } from 'react-redux'
 
 const UserEventDetails = (props) => {
 
   const findOwner = (props) => {
     const owner = props.event.users.filter(user => {
-      return user.invite[0].admin === true
+      return user.invites[0].admin === true
     })
     return owner[0].name
   }
@@ -20,10 +21,10 @@ const UserEventDetails = (props) => {
 
   const eventOwner = () => {
     const user = props.event.users.find(user => user.id === props.user.id)
-    if (user.invite[0].host === true) {
-      const pending = props.event.users.filter(user => user.invite[0].status === "pending" && user.id !== props.user.id).length
-      const confirmed = props.event.users.filter(user => user.invite[0].status === "confirmed" && user.id !== props.user.id).length
-      const declined = props.event.users.filter(user => user.invite[0].status === "declined" && user.id !== props.user.id).length
+    if (user.invites[0].host === true) {
+      const pending = props.event.users.filter(user => user.invites[0].status === "pending" && user.id !== props.user.id).length
+      const confirmed = props.event.users.filter(user => user.invites[0].status === "confirmed" && user.id !== props.user.id).length
+      const declined = props.event.users.filter(user => user.invites[0].status === "declined" && user.id !== props.user.id).length
       return (
         <h4>Pending: {pending} | Confirmed: {confirmed} | Declined: {declined}</h4>
       )
@@ -33,7 +34,11 @@ const UserEventDetails = (props) => {
   }
 
   const whatToRender = (props) => {
-    if (props.event.title === '') {
+    if (props.eventForm === true) {
+      return (
+        <UserCreateEventForm />
+      )
+    } else if (props.event.title === '') {
       return (
         <div>
           <h3>These are my event details, Lady</h3>
@@ -52,7 +57,9 @@ const UserEventDetails = (props) => {
               {eventOwner()}
             </div>
             <iframe
-              src={props.event.google_map}>
+              src={props.event.google_map}
+              title="Stop sending me errors"
+              >
             </iframe>
           </div>
         </div>
@@ -72,7 +79,8 @@ function mapStateToProps(state) {
   return {
     event: state.specific_event,
     events: state.events,
-    user: state.user
+    user: state.user,
+    eventForm: state.eventForm
   }
 }
 

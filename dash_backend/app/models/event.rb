@@ -10,6 +10,5 @@ class Event < ApplicationRecord
     location = self.location.gsub(/\s/,'+')
     location = location.gsub(',+',',')
     "https://www.google.com/maps/embed/v1/place?key=AIzaSyBKVFYXi0xh1ezi1fDswB5fLvvQXd6pSGA&q=#{location}"
-    # "https://maps.googleapis.com/maps/api/staticmap?center=#{self.address}&size=300x300&zoom=15&maptype=roadmap&markers=color:blue%7C#{self.address}"
   end
 end

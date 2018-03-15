@@ -8,6 +8,23 @@ class eventApi {
   static fetchEvents() {
     return fetch(EVENTURL).then(res => res.json())
   }
+
+  static createEvent(event) {
+    return fetch(EVENTURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: event.title,
+        location: event.location,
+        description: event.description,
+        start_time: event.start_time,
+        end_time: event.end_time,
+        user_id: event.user_id
+      })
+    }).then(res => res.json())
+  }
 }
 
 export default eventApi

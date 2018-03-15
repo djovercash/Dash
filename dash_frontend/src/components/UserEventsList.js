@@ -13,7 +13,7 @@ class UserEventsList extends React.Component {
     if (!event) {
       return null
     } else {
-      const attendeesNumber = event.users.filter(user => user.invite[0].status === "confirmed" && user.id !== mainUser.id).length
+      const attendeesNumber = event.users.filter(user => user.invites[0].status === "confirmed" && user.id !== mainUser.id).length
       return attendeesNumber
     }
   }
@@ -24,7 +24,7 @@ class UserEventsList extends React.Component {
   }
 
   render() {
-    const userCreatedEvents = this.props.user.events.filter(event => event.invite[0].admin === true)
+    const userCreatedEvents = this.props.user.events.filter(event => event.invites[0].admin === true)
     return (
       <div>
         <h4>Your Events</h4>
