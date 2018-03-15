@@ -17,6 +17,21 @@ const UserEventDetails = (props) => {
     return moment(fixedTime).format("MMM, Do YYYY, h:mm a")
   }
 
+
+  const eventOwner = () => {
+    const user = props.event.users.find(user => user.id === props.user.id)
+    if (user.invite[0].host === true) {
+      const pending = props.event.users.filter(user => user.invite[0].status === "pending" && user.id !== props.user.id).length
+      const confirmed = props.event.users.filter(user => user.invite[0].status === "confirmed" && user.id !== props.user.id).length
+      const declined = props.event.users.filter(user => user.invite[0].status === "declined" && user.id !== props.user.id).length
+      return (
+        <h4>Pending: {pending} | Confirmed: {confirmed} | Declined: {declined}</h4>
+      )
+    } else {
+      return null
+    }
+  }
+
   const whatToRender = (props) => {
     if (props.event.title === '') {
       return (
@@ -25,7 +40,6 @@ const UserEventDetails = (props) => {
         </div>
       )
     } else {
-      console.log(props.event)
       return (
         <div>
           <h1>{props.event.title}</h1>
@@ -35,6 +49,7 @@ const UserEventDetails = (props) => {
               <h4>Location: {props.event.location}</h4>
               <h4>Start Time: {fixTime(props.event.start_time)}</h4>
               <h4>End Time: {fixTime(props.event.end_time)}</h4>
+              {eventOwner()}
             </div>
             <iframe
               src={props.event.google_map}>
@@ -55,7 +70,9 @@ const UserEventDetails = (props) => {
 
 function mapStateToProps(state) {
   return {
-    event: state.specific_event
+    event: state.specific_event,
+    events: state.events,
+    user: state.user
   }
 }
 

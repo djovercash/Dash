@@ -1,5 +1,4 @@
 import React from 'react'
-import UserEventsListItem from './UserEventsListItem'
 import { fetchEvent, fetchEvents } from '../actions/events'
 import {connect} from 'react-redux'
 
@@ -11,7 +10,6 @@ class UserEventsList extends React.Component {
 
   confirmedAttendees = (id, mainUser) => {
     const event = this.props.events.find(event => event.id === id)
-    console.log(event)
     if (!event) {
       return null
     } else {
