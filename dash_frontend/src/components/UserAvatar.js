@@ -38,7 +38,7 @@ const UserAvatar = (props) => {
       <img src={props.user.photo}  alt={props.user.name} />
       <h5>Welcome Back, {props.user.name}</h5>
       <div>
-        <h5>Your Upcoming Events</h5>
+        <h5>Upcoming Events</h5>
         {topThreeEvents.map(event => {
           return <h5 onClick={() => {findEvent(event.id)}} key={event.id}>{event.title}</h5>
         })}

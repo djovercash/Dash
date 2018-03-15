@@ -1,5 +1,5 @@
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :title, :location, :description, :start_time, :end_time, :categories, :users
+  attributes :id, :title, :location, :description, :start_time, :end_time, :categories, :users, :google_map
 
 
   def users

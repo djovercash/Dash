@@ -2,7 +2,7 @@
 // import eventReducer from './eventReducer'
 // import {combineReducers} from 'redux'
 
-import {FETCHING_EVENT, FETCHED_EVENT} from '../actions/events'
+import {FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS} from '../actions/events'
 import {FETCHING_USER, FETCHED_USER} from '../actions/users'
 //
 const defaultState = {
@@ -30,11 +30,15 @@ function rootReducer (state = defaultState, action) {
     case FETCHING_USER:
         return {...state, isLoading: true};
     case FETCHED_USER:
-        return {...state, user: action.payload, isLoading: false}
+        return {...state, user: action.payload, isLoading: false};
+    case FETCHING_EVENTS:
+        return {...state, isLoading: true};
+    case FETCHED_EVENTS:
+        return {...state, events: action.payload, isLoading: false};
     case FETCHING_EVENT:
-        return {...state, isLoading: true}
+        return {...state, isLoading: true};
     case FETCHED_EVENT:
-        return {...state, specific_event: action.payload, isLoading: false}
+        return {...state, specific_event: action.payload, isLoading: false};
     default:
       return state
   }

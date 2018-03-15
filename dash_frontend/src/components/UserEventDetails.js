@@ -29,13 +29,16 @@ const UserEventDetails = (props) => {
       return (
         <div>
           <h1>{props.event.title}</h1>
-          <div>
+          <div id="eventDetails">
             <div>
               <h4>Invited by: {findOwner(props)}</h4>
               <h4>Location: {props.event.location}</h4>
               <h4>Start Time: {fixTime(props.event.start_time)}</h4>
               <h4>End Time: {fixTime(props.event.end_time)}</h4>
             </div>
+            <iframe
+              src={props.event.google_map}>
+            </iframe>
           </div>
         </div>
       )
