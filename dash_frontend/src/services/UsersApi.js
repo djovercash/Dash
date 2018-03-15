@@ -1,9 +1,9 @@
 const USERURL = 'http://localhost:3000/users'
 
-class UserApi {
+class userApi {
   static fetchUser(id) {
     return fetch(`${USERURL}/${id}`).then(res => res.json())
   }
 }
 
-export default UserApi
+export default userApi

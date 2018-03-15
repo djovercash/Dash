@@ -32,8 +32,8 @@ ActiveRecord::Schema.define(version: 20180314142658) do
     t.string "title"
     t.string "location"
     t.string "description"
-    t.time "start_time"
-    t.time "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

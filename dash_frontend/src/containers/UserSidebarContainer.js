@@ -4,7 +4,7 @@ import UserAvatar from '../components/UserAvatar'
 const UserSidebarContainer = () => {
   return (
     <div>
-      <h4>Shut up, b*tch</h4>
+      <h4>Yas Qween</h4>
       <UserAvatar />
     </div>
   )
