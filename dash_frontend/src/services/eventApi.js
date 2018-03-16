@@ -44,6 +44,15 @@ class eventApi {
       })
     }).then(res => res.json())
   }
+
+  static deleteEvent(event) {
+    return fetch(`${EVENTURL}/${event.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    }).then(res => res.json())
+  }
 }
 
 export default eventApi

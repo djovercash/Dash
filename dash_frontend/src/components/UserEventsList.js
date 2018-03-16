@@ -25,6 +25,7 @@ class UserEventsList extends React.Component {
 
   render() {
     const userCreatedEvents = this.props.user.events.filter(event => event.invites[0].admin === true)
+
     return (
       <div>
         <h4>Your Events</h4>

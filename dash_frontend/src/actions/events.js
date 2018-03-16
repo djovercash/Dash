@@ -10,14 +10,15 @@ export const FETCHING_EVENT = "FETCHING_EVENT"
 export const FETCHED_EVENT = "FETCHED_EVENT"
 export const FETCHING_EVENTS = "FETCHING_EVENTS"
 export const FETCHED_EVENTS = "FETCHED_EVENTS"
+export const DELETE_EVENT = "DELETE_EVENT"
 
 export function fetchEvents() {
   return function(dispatch) {
     dispatch({ type: FETCHING_EVENTS })
-    eventApi.fetchEvents().then(events => {
+    eventApi.fetchEvents().then(returnedEvents => {
       dispatch({
         type: FETCHED_EVENTS,
-        payload: events
+        payload: returnedEvents
       })
     })
   }
@@ -26,10 +27,10 @@ export function fetchEvents() {
 export function fetchEvent(id) {
   return function(dispatch) {
     dispatch({ type: FETCHING_EVENT })
-    eventApi.fetchEvent(id).then(event => {
+    eventApi.fetchEvent(id).then(returnedEvent => {
       dispatch({
         type: FETCHED_EVENT,
-        payload: event
+        payload: returnedEvent
       })
     })
   }
@@ -50,10 +51,10 @@ export function editEvent() {
 export function addEvent(event) {
   return function(dispatch) {
     dispatch({ type: ADDING_EVENT })
-    eventApi.createEvent(event).then(event => {
+    eventApi.createEvent(event).then(returnedEvent => {
       dispatch({
         type: ADDED_EVENT,
-        payload: event
+        payload: returnedEvent
       })
     })
   }
@@ -62,11 +63,19 @@ export function addEvent(event) {
 export function updateEvent(event) {
   return function(dispatch) {
     dispatch({ type: EDITING_EVENT})
-    eventApi.updateEvent(event).then(event => {
+    eventApi.updateEvent(event).then(returnedEvent => {
       dispatch({
         type: EDITED_EVENT,
-        payload: event
+        payload: returnedEvent
       })
     })
+  }
+}
+
+export function deleteEvent(event) {
+  eventApi.deleteEvent(event).then(res => console.log(res))
+  return {
+    type: DELETE_EVENT,
+    payload: event
   }
 }

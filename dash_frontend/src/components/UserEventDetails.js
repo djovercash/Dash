@@ -2,13 +2,12 @@ import React from 'react'
 import moment from 'moment-timezone'
 import UserCreateEventForm from '../components/UserCreateEventForm'
 import UserEditEventForm from '../components/UserEditEventForm'
-import { editEvent} from '../actions/events'
+import { editEvent, deleteEvent } from '../actions/events'
 import { connect } from 'react-redux'
 
 const UserEventDetails = (props) => {
 
   const findOwner = (props) => {
-    console.log(props.event)
     const owner = props.event.users.filter(user => {
       return user.invites[0].admin === true
     })
@@ -79,6 +78,7 @@ const UserEventDetails = (props) => {
             </iframe>
           </div>
           <button onClick={props.editEvent}>Edit {props.event.title}</button>
+          <button onClick={() => {props.deleteEvent(props.event)}}>Delete {props.event.title}</button>
         </div>
       )
     }
@@ -103,4 +103,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { editEvent })(UserEventDetails)
+export default connect(mapStateToProps, { editEvent, deleteEvent })(UserEventDetails)

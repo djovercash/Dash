@@ -26,14 +26,23 @@ class EventsController < ApplicationController
   end
 
   def update
-    @id = params[:id].to_i
-    @event = Event.find_by(id: @id)
-    @event = Event.update(title: params[:title], location: params[:location], description: params[:description], start_time: params[:start_time], end_time: params[:end_time])
-    @friends = params[:friends]
-    @friends.each do |friend|
-      Invite.create(user_id: friend["id"], event_id: @event.id)
+    @event = Event.find_by(id: params[:id])
+    @event.update(title: params[:title], location: params[:location], description: params[:description], start_time: params[:start_time], end_time: params[:end_time])
+    if @event.valid?
+      @friends = params[:friends]
+      @friends.each do |friend|
+        Invite.create(user_id: friend["id"], event_id: @event.id)
+      end
+      render json:@event
+    else
+      render json:{message: "Invalid Information. Please try again"}, status: 401
     end
-    render json:@event
+  end
+
+  def destroy
+    @event = Event.find_by(id: params[:id])
+    @event.destroy
+    render json:{message: "Event Destroyed"}, status: 200
   end
 
   private

@@ -33,7 +33,6 @@ const UserAvatar = (props) => {
   }
 
   const events = topThreeEvents()
-  console.log(props.user)
 
   return (
     <div>
@@ -43,7 +42,7 @@ const UserAvatar = (props) => {
         <h5>Upcoming Events</h5>
         <div>
           {events.map(event => {
-            return <h5 onClick={() => {findEvent(event.id)}} key={event.title}>{event.title}</h5>
+            return <h5 key={event.id} onClick={() => {findEvent(event.id)}}>{event.title}</h5>
           })}
         </div>
       </div>
