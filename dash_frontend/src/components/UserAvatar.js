@@ -4,24 +4,24 @@ import { fetchEvent, createEvent} from '../actions/events'
 
 
 const UserAvatar = (props) => {
-  const SortEvents = (events) => {
-    events.sort(function(a, b) {
+
+  const topThreeEvents = () => {
+    let sortedEvents = props.user.events.sort(function(a, b) {
       a = new Date(a.start_time)
       b = new Date(b.start_time)
       return a > b ? 1 : a < b ? -1 : 0
     })
-    return events
-  }
 
-  const FilterEvents = (events) => {
-    const filterEvents = events.filter(event => {
+    sortedEvents.filter(event => {
       return event.invites[0].status === "confirmed"
     })
-    return filterEvents
-  }
 
-  const FirstThree = (events) => {
-    return events.slice(0, 3)
+    if (sortedEvents.length > 3) {
+      const topThreeEvents = sortedEvents.slice(0, 3)
+      return topThreeEvents
+    } else {
+      return sortedEvents
+    }
   }
 
   const findEvent = (id) => {
@@ -32,10 +32,8 @@ const UserAvatar = (props) => {
     props.createEvent()
   }
 
-
-  const events = SortEvents(props.user.events)
-  const upcomingEvents = FilterEvents(events)
-  const topThreeEvents = upcomingEvents.length > 3 ? FirstThree(upcomingEvents) : upcomingEvents
+  const events = topThreeEvents()
+  console.log(props.user)
 
   return (
     <div>
@@ -43,9 +41,11 @@ const UserAvatar = (props) => {
       <h5>Welcome Back, {props.user.name}</h5>
       <div>
         <h5>Upcoming Events</h5>
-        {topThreeEvents.map(event => {
-          return <h5 onClick={() => {findEvent(event.id)}} key={event.id}>{event.title}</h5>
-        })}
+        <div>
+          {events.map(event => {
+            return <h5 onClick={() => {findEvent(event.id)}} key={event.title}>{event.title}</h5>
+          })}
+        </div>
       </div>
       <button onClick={createEvent}>Create Event</button>
     </div>

@@ -4,6 +4,8 @@ export const CREATE_EVENT = "CREATE_EVENT"
 export const ADDING_EVENT = "ADDING_EVENT"
 export const ADDED_EVENT = "ADDED_EVENT"
 export const EDIT_EVENT = "EDIT_EVENT"
+export const EDITING_EVENT = "EDITING_EVENT"
+export const EDITED_EVENT = "EDITED_EVENT"
 export const FETCHING_EVENT = "FETCHING_EVENT"
 export const FETCHED_EVENT = "FETCHED_EVENT"
 export const FETCHING_EVENTS = "FETCHING_EVENTS"
@@ -51,6 +53,18 @@ export function addEvent(event) {
     eventApi.createEvent(event).then(event => {
       dispatch({
         type: ADDED_EVENT,
+        payload: event
+      })
+    })
+  }
+}
+
+export function updateEvent(event) {
+  return function(dispatch) {
+    dispatch({ type: EDITING_EVENT})
+    eventApi.updateEvent(event).then(event => {
+      dispatch({
+        type: EDITED_EVENT,
         payload: event
       })
     })

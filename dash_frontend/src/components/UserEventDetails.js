@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 const UserEventDetails = (props) => {
 
   const findOwner = (props) => {
+    console.log(props.event)
     const owner = props.event.users.filter(user => {
       return user.invites[0].admin === true
     })
@@ -45,7 +46,6 @@ const UserEventDetails = (props) => {
   }
 
   const whatToRender = (props) => {
-    console.log(props.editForm)
     if (props.createForm === true) {
       return (
         <UserCreateEventForm />

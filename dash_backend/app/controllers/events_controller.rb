@@ -25,10 +25,21 @@ class EventsController < ApplicationController
     end
   end
 
+  def update
+    @id = params[:id].to_i
+    @event = Event.find_by(id: @id)
+    @event = Event.update(title: params[:title], location: params[:location], description: params[:description], start_time: params[:start_time], end_time: params[:end_time])
+    @friends = params[:friends]
+    @friends.each do |friend|
+      Invite.create(user_id: friend["id"], event_id: @event.id)
+    end
+    render json:@event
+  end
+
   private
 
   def event_params
-    params.permit(:title, :location, :description, :start_time, :end_time, :user_id, :friends)
+    params.permit(:id, :title, :location, :description, :start_time, :end_time, :user_id, :friends)
   end
 
 end

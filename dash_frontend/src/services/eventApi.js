@@ -26,6 +26,24 @@ class eventApi {
       })
     }).then(res => res.json())
   }
+
+  static updateEvent(event) {
+    return fetch(`${EVENTURL}/${event.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        title: event.title,
+        location: event.location,
+        description: event.description,
+        start_time: event.start_time,
+        end_time: event.end_time,
+        user_id: event.user_id,
+        friends: event.friends
+      })
+    }).then(res => res.json())
+  }
 }
 
 export default eventApi

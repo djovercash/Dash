@@ -2,7 +2,7 @@
 // import eventReducer from './eventReducer'
 // import {combineReducers} from 'redux'
 
-import {CREATE_EVENT, ADDING_EVENT, ADDED_EVENT, EDIT_EVENT, FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS} from '../actions/events'
+import {CREATE_EVENT, ADDING_EVENT, ADDED_EVENT, EDIT_EVENT, EDITING_EVENT, EDITED_EVENT, FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS} from '../actions/events'
 import {FETCHING_USER, FETCHED_USER} from '../actions/users'
 //
 const defaultState = {
@@ -32,7 +32,6 @@ function rootReducer (state = defaultState, action) {
     case FETCHING_USER:
         return {...state, isLoading: true};
     case FETCHED_USER:
-        console.log(action.payload)
         return {...state, user: action.payload, isLoading: false};
     case CREATE_EVENT:
         return {...state, createForm: true};
@@ -42,6 +41,14 @@ function rootReducer (state = defaultState, action) {
         return {...state, user: {...state.user, events: [...state.user.events, {description: action.payload.description, end_time: action.payload.end_time, id: action.payload.id, invites: [action.payload.users[0].invites], location: action.payload.location, start_time: action.payload.start_time,}]}, events: [...state.events, action.payload], isLoading: false, specific_event: action.payload}
     case EDIT_EVENT:
         return {...state, editForm: true};
+    case EDITING_EVENT:
+        return {...state, isLoading: true, editForm: false};
+    case EDITED_EVENT:
+        const nonEditedEvents = state.events.filter(event => event.id !== action.payload[0].id)
+        const nonEditedUserEvents = state.user.events.filter(event => event.id !== action.payload[0].id)
+        const userInvite = action.payload[0].users.filter(user => user.id === state.user.id)
+        const userInvite2 = userInvite.find(invite => invite.id === state.user.id)
+        return {...state, user: {...state.user, events: [...nonEditedUserEvents, {description: action.payload[0].description, end_time: action.payload[0].end_time, id: action.payload[0].id, invites: [...userInvite2.invites], location: action.payload[0].location, start_time: action.payload[0].start_time, title: action.payload[0].title}]}, events: [...nonEditedEvents, action.payload], isLoading: false, specific_event: action.payload[0]}
     case FETCHING_EVENTS:
         return {...state, isLoading: true};
     case FETCHED_EVENTS:
