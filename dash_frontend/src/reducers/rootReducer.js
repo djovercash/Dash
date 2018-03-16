@@ -38,8 +38,6 @@ function rootReducer (state = defaultState, action) {
     case ADDING_EVENT:
         return {...state, isLoading: true, eventForm: false};
     case ADDED_EVENT:
-        console.log(state.user.events)
-        console.log(action.payload)
         return {...state, user: {...state.user, events: [...state.user.events, {description: action.payload.description, end_time: action.payload.end_time, id: action.payload.id, invites: [action.payload.users[0].invites], location: action.payload.location, start_time: action.payload.start_time,}]}, events: [...state.events, action.payload], isLoading: false, specific_event: action.payload}
     case FETCHING_EVENTS:
         return {...state, isLoading: true};

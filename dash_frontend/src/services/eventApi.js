@@ -21,7 +21,8 @@ class eventApi {
         description: event.description,
         start_time: event.start_time,
         end_time: event.end_time,
-        user_id: event.user_id
+        user_id: event.user_id,
+        friends: event.friends
       })
     }).then(res => res.json())
   }

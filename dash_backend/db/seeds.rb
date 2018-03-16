@@ -11,6 +11,16 @@ require 'faker'
   User.create(name: Faker::Name.name, email: Faker::Internet.email, photo: "http://www.you-can-be-funny.com/images/grandamainpurple.jpg", hometown: Faker::Address.state, password: '123', password_confirmation: '123')
 end
 
-200.times do |i|
-  Friendship.create(user_id: Random.new.rand(0..99), friend_id: Random.new.rand(0..99))
+500.times do |i|
+  Friendship.create(user_id: Random.new.rand(1..100), friend_id: Random.new.rand(1..100))
+end
+
+FriendCategory.create(name: "Family")
+FriendCategory.create(name: "Friends")
+FriendCategory.create(name: "College Buddies")
+FriendCategory.create(name: "Let's Party")
+FriendCategory.create(name: "Chess Club")
+
+300.times do |i|
+  Friendlist.create(friendship_id: Random.new.rand(1..500), friend_category_id: Random.new.rand(1..5))
 end
