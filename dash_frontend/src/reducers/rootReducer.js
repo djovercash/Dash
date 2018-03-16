@@ -3,7 +3,7 @@
 // import {combineReducers} from 'redux'
 
 import {CREATE_EVENT, ADDING_EVENT, ADDED_EVENT, EDIT_EVENT, EDITING_EVENT, EDITED_EVENT, FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS, DELETE_EVENT} from '../actions/events'
-import {FETCHING_USER, FETCHED_USER} from '../actions/users'
+import {FETCHING_USER, FETCHED_USER, CREATING_USER, CREATED_USER, LOGOUT, SIGNUP} from '../actions/users'
 //
 const defaultState = {
   user: {name: '', email: '', photo: '', hometown: '', password_digest: '',
@@ -24,7 +24,9 @@ const defaultState = {
   },
   isLoading: false,
   createForm: false,
-  editForm: false
+  editForm: false,
+  loggedIn: false,
+  signup: false
 }
 
 function rootReducer (state = defaultState, action) {
@@ -32,7 +34,19 @@ function rootReducer (state = defaultState, action) {
     case FETCHING_USER:
         return {...state, isLoading: true};
     case FETCHED_USER:
-        return {...state, user: action.payload, isLoading: false};
+        if (localStorage.user_id) {
+          return {...state, user: action.payload, isLoading: false, loggedIn: true};
+        } else {
+          localStorage.setItem("user_id", action.payload.id)
+          return {...state, user: action.payload, isLoading: false, loggedIn: true};
+        };
+    case SIGNUP:
+          return {...state, signup: true};
+    case CREATING_USER:
+        return {...state, isLoading: true};
+    case CREATED_USER:
+      localStorage.setItem("user_id", action.payload.id)
+      return {...state, user: action.payload, isLoading: false, loggedIn: true, signup: false}
     case CREATE_EVENT:
         return {...state, createForm: true};
     case ADDING_EVENT:
@@ -139,6 +153,30 @@ function rootReducer (state = defaultState, action) {
             }]
           }
         };
+    case LOGOUT:
+      localStorage.clear()
+      return {
+        user: {name: '', email: '', photo: '', hometown: '', password_digest: '',
+          friends: [{name: '', email: '', photo: '', hometown: '', password_digest: '', friend_category: []}],
+          events: [{title: '', location: '', description: '', start_time: '', end_time: '',
+            invites: [{user_id: null, event_id: null, admin: null, status: '', host: null }]
+          }]
+        },
+        events: [{title: '', location: '', description: '', start_time: '', end_time: '',
+          users: [{name: '', email: '', photo: '', hometown: '', password_digest: '',
+            invites: [{user_id: null, event_id: null, admin: null, status: '', host: null }]
+          }]
+        }],
+        specific_event: {title: '', location: '', description: '', start_time: '', end_time: '',
+          users: [{name: '', email: '', photo: '', hometown: '', password_digest: '',
+            invites: [{user_id: null, event_id: null, admin: null, status: '', host: null }]
+          }]
+        },
+        isLoading: false,
+        createForm: false,
+        editForm: false,
+        loggedIn: false
+      }
     default:
       return state
   }

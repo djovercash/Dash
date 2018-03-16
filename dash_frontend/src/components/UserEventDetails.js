@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 const UserEventDetails = (props) => {
 
   const findOwner = (props) => {
+    console.log(props)
     const owner = props.event.users.filter(user => {
       return user.invites[0].admin === true
     })
@@ -22,7 +23,7 @@ const UserEventDetails = (props) => {
     const oldTime = splitT[1]
     const arrayTime = oldTime.split("")
     const hour = (oldTime[1] - 5).toString()
-    const newTime = arrayTime.splice(1, 1, hour)
+    arrayTime.splice(1, 1, hour)
     const newFixedTime = arrayTime.join("")
     const newFixedDateTime = date + " " + newFixedTime
     const momo = moment(newFixedDateTime).format("MMM, Do YYYY, h:mm a")
@@ -53,7 +54,7 @@ const UserEventDetails = (props) => {
       return (
         <UserEditEventForm />
       )
-    } else if (props.event.title === '') {
+    } else if (props.event.title === "") {
       return (
         <div>
           <h3>These are my event details, Lady</h3>
