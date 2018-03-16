@@ -2,7 +2,7 @@
 // import eventReducer from './eventReducer'
 // import {combineReducers} from 'redux'
 
-import {CREATE_EVENT, ADDING_EVENT, ADDED_EVENT, FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS} from '../actions/events'
+import {CREATE_EVENT, ADDING_EVENT, ADDED_EVENT, EDIT_EVENT, FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS} from '../actions/events'
 import {FETCHING_USER, FETCHED_USER} from '../actions/users'
 //
 const defaultState = {
@@ -23,7 +23,8 @@ const defaultState = {
     }]
   },
   isLoading: false,
-  eventForm: false
+  createForm: false,
+  editForm: false
 }
 
 function rootReducer (state = defaultState, action) {
@@ -34,11 +35,13 @@ function rootReducer (state = defaultState, action) {
         console.log(action.payload)
         return {...state, user: action.payload, isLoading: false};
     case CREATE_EVENT:
-        return {...state, eventForm: true};
+        return {...state, createForm: true};
     case ADDING_EVENT:
-        return {...state, isLoading: true, eventForm: false};
+        return {...state, isLoading: true, createForm: false};
     case ADDED_EVENT:
         return {...state, user: {...state.user, events: [...state.user.events, {description: action.payload.description, end_time: action.payload.end_time, id: action.payload.id, invites: [action.payload.users[0].invites], location: action.payload.location, start_time: action.payload.start_time,}]}, events: [...state.events, action.payload], isLoading: false, specific_event: action.payload}
+    case EDIT_EVENT:
+        return {...state, editForm: true};
     case FETCHING_EVENTS:
         return {...state, isLoading: true};
     case FETCHED_EVENTS:

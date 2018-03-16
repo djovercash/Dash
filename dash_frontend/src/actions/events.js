@@ -3,6 +3,7 @@ import eventApi from '../services/eventApi'
 export const CREATE_EVENT = "CREATE_EVENT"
 export const ADDING_EVENT = "ADDING_EVENT"
 export const ADDED_EVENT = "ADDED_EVENT"
+export const EDIT_EVENT = "EDIT_EVENT"
 export const FETCHING_EVENT = "FETCHING_EVENT"
 export const FETCHED_EVENT = "FETCHED_EVENT"
 export const FETCHING_EVENTS = "FETCHING_EVENTS"
@@ -35,6 +36,12 @@ export function fetchEvent(id) {
 export function createEvent() {
   return {
     type: CREATE_EVENT
+  }
+}
+
+export function editEvent() {
+  return {
+    type: EDIT_EVENT
   }
 }
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addEvent} from '../actions/events'
+import {updateEvent} from '../actions/events'
 
-class UserCreateEventForm extends React.Component {
+class UserEditEventForm extends React.Component {
 
   state = {
     title: '',
@@ -13,8 +13,12 @@ class UserCreateEventForm extends React.Component {
     end_date: '',
     end_time: '',
     friendFilter: '',
-    friends: [...this.props.user.friends],
+    friends: [],
     invitedFriends: []
+  }
+
+  componentDidMount() {
+    console.log(this.props.event)
   }
 
   handleOnChange = (e) => {
@@ -33,8 +37,8 @@ class UserCreateEventForm extends React.Component {
       title: this.state.title,
       location: this.state.location,
       description: this.state.description,
-      start_time: new Date(`${startDateElements[0]}-${startDateElements[1]}-${startDateElements[2]} ${startTimeElements[0]}:${startTimeElements[1]}:00 GMT-0500`),
-      end_time: new Date(`${endDateElements[0]}-${endDateElements[1]}-${endDateElements[2]} ${endTimeElements[0]}:${endTimeElements[1]}:00 GMT-0500`),
+      start_time: new Date(startDateElements[0], startDateElements[1], startDateElements[2], startTimeElements[0], startTimeElements[1]),
+      end_time: new Date(endDateElements[0], endDateElements[1], endDateElements[2], endTimeElements[0], endTimeElements[1]),
       user_id: this.props.user.id,
       friends: this.state.invitedFriends
     }
@@ -97,7 +101,8 @@ class UserCreateEventForm extends React.Component {
 function mapStateToProps(state) {
   return {
     user: state.user,
+    event: state.specific_event
   }
 }
 
-export default connect(mapStateToProps, { addEvent })(UserCreateEventForm)
+export default connect(mapStateToProps)(UserEditEventForm)

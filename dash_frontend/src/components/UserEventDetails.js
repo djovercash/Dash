@@ -1,6 +1,8 @@
 import React from 'react'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import UserCreateEventForm from '../components/UserCreateEventForm'
+import UserEditEventForm from '../components/UserEditEventForm'
+import { editEvent} from '../actions/events'
 import { connect } from 'react-redux'
 
 const UserEventDetails = (props) => {
@@ -15,7 +17,16 @@ const UserEventDetails = (props) => {
   const fixTime = (time) => {
     const stringTime = time.toString()
     const fixedTime = stringTime.slice(0, -8)
-    return moment(fixedTime).format("MMM, Do YYYY, h:mm a")
+    const splitT = fixedTime.split("T")
+    const date = splitT[0]
+    const oldTime = splitT[1]
+    const arrayTime = oldTime.split("")
+    const hour = (oldTime[1] - 5).toString()
+    const newTime = arrayTime.splice(1, 1, hour)
+    const newFixedTime = arrayTime.join("")
+    const newFixedDateTime = date + " " + newFixedTime
+    const momo = moment(newFixedDateTime).format("MMM, Do YYYY, h:mm a")
+    return momo
   }
 
 
@@ -34,9 +45,14 @@ const UserEventDetails = (props) => {
   }
 
   const whatToRender = (props) => {
-    if (props.eventForm === true) {
+    console.log(props.editForm)
+    if (props.createForm === true) {
       return (
         <UserCreateEventForm />
+      )
+    } else if (props.editForm === true) {
+      return (
+        <UserEditEventForm />
       )
     } else if (props.event.title === '') {
       return (
@@ -62,6 +78,7 @@ const UserEventDetails = (props) => {
               >
             </iframe>
           </div>
+          <button onClick={props.editEvent}>Edit {props.event.title}</button>
         </div>
       )
     }
@@ -80,9 +97,10 @@ function mapStateToProps(state) {
     event: state.specific_event,
     events: state.events,
     user: state.user,
-    eventForm: state.eventForm
+    createForm: state.createForm,
+    editForm: state.editForm
   }
 }
 
 
-export default connect(mapStateToProps)(UserEventDetails)
+export default connect(mapStateToProps, { editEvent })(UserEventDetails)
