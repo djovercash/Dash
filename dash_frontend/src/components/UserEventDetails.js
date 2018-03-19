@@ -20,6 +20,7 @@ const UserEventDetails = (props) => {
     const startDateTimeObj = new Date(props.event.start_time)
     const startDateTimeString = startDateTimeObj.toString()
     const timeZone = startDateTimeString.slice(startDateTimeObj.length - 5)
+    console.log(startDateTimeString[36])
     if (startDateTimeString[36] === "D") {
       const fixedTime = time.slice(0, -8)
       const splitT = fixedTime.split("T")
