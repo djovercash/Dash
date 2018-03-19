@@ -1,4 +1,6 @@
 const EVENTURL = 'http://localhost:3000/events'
+const EVENTFULURLFRONT = 'http://api.eventful.com/json/events/search?location='
+const EVENTFULURLBACK = '&app_key=mFWmXNNrpFW68pvv'
 
 class eventApi {
   static fetchEvent(id) {
@@ -29,8 +31,9 @@ class eventApi {
 
   static updateEvent(event) {
     return fetch(`${EVENTURL}/${event.id}`, {
-      method: "PATCH",
+      method: "POST",
       headers: {
+        "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -53,6 +56,16 @@ class eventApi {
       },
     }).then(res => res.json())
   }
+
+  static fetchEventfulEvents(town) {
+    return fetch(`${EVENTFULURLFRONT}${town}${EVENTFULURLBACK}`, {
+      headers: {
+        "app_key": "mFWmXNNrpFW68pvv"
+      }
+    })
+    .then(res => res.json())
+  }
+
 }
 
 export default eventApi

@@ -9,7 +9,9 @@ Rails.application.routes.draw do
   resources :users
 
   post '/login' => "users#login"
+  post '/events/:id' => "events#update"
   patch '/events/:id' => "events#update"
+  patch '/invites/:id' => "invites#update"
   delete '/events/:id' => "events#destroy"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

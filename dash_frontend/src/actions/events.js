@@ -10,6 +10,8 @@ export const FETCHING_EVENT = "FETCHING_EVENT"
 export const FETCHED_EVENT = "FETCHED_EVENT"
 export const FETCHING_EVENTS = "FETCHING_EVENTS"
 export const FETCHED_EVENTS = "FETCHED_EVENTS"
+export const FETCHING_EVENTFUL_EVENTS = "FETCHING_EVENTFUL_EVENTS"
+export const FETCHED_EVENTFUL_EVENTS = "FETCHED_EVENTFUL_EVENTS"
 export const DELETE_EVENT = "DELETE_EVENT"
 
 export function fetchEvents() {
@@ -31,6 +33,18 @@ export function fetchEvent(id) {
       dispatch({
         type: FETCHED_EVENT,
         payload: returnedEvent
+      })
+    })
+  }
+}
+
+export function fetchEventfulAPI(town) {
+  return function(dispatch) {
+    dispatch({ type: FETCHING_EVENTFUL_EVENTS })
+    eventApi.fetchEventfulEvents(town).then(events => {
+      dispatch({
+        type: FETCHED_EVENTFUL_EVENTS,
+        payload: events
       })
     })
   }

@@ -18,22 +18,32 @@ class UserEventsList extends React.Component {
     }
   }
 
-
   findEvent = (id) => {
     this.props.fetchEvent(id)
   }
 
   render() {
     const userCreatedEvents = this.props.user.events.filter(event => event.invites[0].admin === true)
+    const userInvitedEvents = this.props.user.events.filter(event => event.invites[0].admin !== true)
 
     return (
       <div>
-        <h4>Your Events</h4>
-        <ul>
-          {userCreatedEvents.map(event => {
-            return <li key={event.id} onClick={() => {this.findEvent(event.id)}}>{event.title} | Confirmed: {this.confirmedAttendees(event.id, this.props.user)} </li>
-          })}
-        </ul>
+        <div>
+          <h4>Your Events</h4>
+          <ul>
+            {userCreatedEvents.map(event => {
+              return <li key={event.id} onClick={() => {this.findEvent(event.id)}}>{event.title} | Confirmed: {this.confirmedAttendees(event.id, this.props.user)} </li>
+            })}
+          </ul>
+        </div>
+        <div>
+          <h4>Invites</h4>
+          <ul>
+            {userInvitedEvents.map(event => {
+              return <li key={event.id} onClick={() => {this.findEvent(event.id)}}>{event.title} | Status: {event.invites[0].status} </li>
+            })}
+          </ul>
+        </div>
       </div>
     )
   }

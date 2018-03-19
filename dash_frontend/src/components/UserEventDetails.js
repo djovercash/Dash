@@ -2,13 +2,14 @@ import React from 'react'
 import moment from 'moment-timezone'
 import UserCreateEventForm from '../components/UserCreateEventForm'
 import UserEditEventForm from '../components/UserEditEventForm'
+import UserEventfulList from '../components/UserEventfulList'
 import { editEvent, deleteEvent } from '../actions/events'
+import {updateStatus} from '../actions/users'
 import { connect } from 'react-redux'
 
 const UserEventDetails = (props) => {
 
   const findOwner = (props) => {
-    console.log(props)
     const owner = props.event.users.filter(user => {
       return user.invites[0].admin === true
     })
@@ -16,18 +17,50 @@ const UserEventDetails = (props) => {
   }
 
   const fixTime = (time) => {
-    const stringTime = time.toString()
-    const fixedTime = stringTime.slice(0, -8)
-    const splitT = fixedTime.split("T")
-    const date = splitT[0]
-    const oldTime = splitT[1]
-    const arrayTime = oldTime.split("")
-    const hour = (oldTime[1] - 5).toString()
-    arrayTime.splice(1, 1, hour)
-    const newFixedTime = arrayTime.join("")
-    const newFixedDateTime = date + " " + newFixedTime
-    const momo = moment(newFixedDateTime).format("MMM, Do YYYY, h:mm a")
-    return momo
+    const startDateTimeObj = new Date(props.event.start_time)
+    const startDateTimeString = startDateTimeObj.toString()
+    const timeZone = startDateTimeString.slice(startDateTimeObj.length - 5)
+    if (startDateTimeString[36] === "D") {
+      const fixedTime = time.slice(0, -8)
+      const splitT = fixedTime.split("T")
+      const date = splitT[0]
+      const arrayTime = splitT[1].split(":")
+      const hour = parseInt(arrayTime[0])
+      const fixedHour = hour - 4
+      if (fixedHour < 12) {
+        const finalHour = `0${fixedHour}`
+        const newTime = finalHour + ":" + arrayTime[1]
+        const newDateTime = date + " " + newTime
+        const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
+        return momo
+      } else {
+        const finalHour = fixedHour.toString()
+        const newTime = finalHour + ":" + arrayTime[1]
+        const newDateTime = date + " " + newTime
+        const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
+        return momo
+      }
+    } else {
+      const fixedTime = time.slice(0, -8)
+      const splitT = fixedTime.split("T")
+      const date = splitT[0]
+      const arrayTime = splitT[1].split(":")
+      const hour = parseInt(arrayTime[0])
+      const fixedHour = hour - 5
+      if (fixedHour < 12) {
+        const finalHour = `0${fixedHour}`
+        const newTime = finalHour + ":" + arrayTime[1]
+        const newDateTime = date + " " + newTime
+        const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
+        return momo
+      } else {
+        const finalHour = fixedHour.toString()
+        const newTime = finalHour + ":" + arrayTime[1]
+        const newDateTime = date + " " + newTime
+        const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
+        return momo
+      }
+    }
   }
 
 
@@ -38,10 +71,21 @@ const UserEventDetails = (props) => {
       const confirmed = props.event.users.filter(user => user.invites[0].status === "confirmed" && user.id !== props.user.id).length
       const declined = props.event.users.filter(user => user.invites[0].status === "declined" && user.id !== props.user.id).length
       return (
-        <h4>Pending: {pending} | Confirmed: {confirmed} | Declined: {declined}</h4>
+        <div>
+          <h4>Pending: {pending} | Confirmed: {confirmed} | Declined: {declined}</h4>
+          <button onClick={props.editEvent}>Edit {props.event.title}</button>
+          <button onClick={() => {props.deleteEvent(props.event)}}>Delete {props.event.title}</button>
+        </div>
       )
     } else {
-      return null
+      const event = user.invites.filter(invite => invite.event_id === props.event.id)
+      return (
+        <div>
+          <h4> Currently: {event[0].status}</h4>
+          <button onClick={() => {props.updateStatus(event, "confirmed")}}>Confirm</button>
+          <button onClick={() => {props.updateStatus(event, "declined")}}>Decline</button>
+        </div>
+      )
     }
   }
 
@@ -54,6 +98,10 @@ const UserEventDetails = (props) => {
       return (
         <UserEditEventForm />
       )
+    } else if (props.eventful === true) {
+      return (
+        <UserEventfulList />
+      )
     } else if (props.event.title === "") {
       return (
         <div>
@@ -61,6 +109,7 @@ const UserEventDetails = (props) => {
         </div>
       )
     } else {
+      console.log(props.event)
       return (
         <div>
           <h1>{props.event.title}</h1>
@@ -78,8 +127,6 @@ const UserEventDetails = (props) => {
               >
             </iframe>
           </div>
-          <button onClick={props.editEvent}>Edit {props.event.title}</button>
-          <button onClick={() => {props.deleteEvent(props.event)}}>Delete {props.event.title}</button>
         </div>
       )
     }
@@ -99,9 +146,10 @@ function mapStateToProps(state) {
     events: state.events,
     user: state.user,
     createForm: state.createForm,
-    editForm: state.editForm
+    editForm: state.editForm,
+    eventful: state.eventfulSearch
   }
 }
 
 
-export default connect(mapStateToProps, { editEvent, deleteEvent })(UserEventDetails)
+export default connect(mapStateToProps, { editEvent, deleteEvent, updateStatus })(UserEventDetails)

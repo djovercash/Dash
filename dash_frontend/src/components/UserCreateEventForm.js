@@ -33,11 +33,12 @@ class UserCreateEventForm extends React.Component {
       title: this.state.title,
       location: this.state.location,
       description: this.state.description,
-      start_time: new Date(`${startDateElements[0]}-${startDateElements[1]}-${startDateElements[2]} ${startTimeElements[0]}:${startTimeElements[1]}:00 GMT-0500`),
-      end_time: new Date(`${endDateElements[0]}-${endDateElements[1]}-${endDateElements[2]} ${endTimeElements[0]}:${endTimeElements[1]}:00 GMT-0500`),
+      start_time: new Date(startDateElements[0], startDateElements[1] - 1, startDateElements[2], startTimeElements[0], startTimeElements[1]),
+      end_time: new Date(endDateElements[0], endDateElements[1] - 1, endDateElements[2], endTimeElements[0], endTimeElements[1]),
       user_id: this.props.user.id,
       friends: this.state.invitedFriends
     }
+    console.log("Create Event", action)
     this.props.addEvent(action)
   }
 

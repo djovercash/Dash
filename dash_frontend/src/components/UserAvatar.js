@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { fetchEvent, createEvent} from '../actions/events'
+import { fetchEvent, createEvent, fetchEventfulAPI} from '../actions/events'
 
 
 const UserAvatar = (props) => {
@@ -33,20 +33,19 @@ const UserAvatar = (props) => {
   }
 
   const events = topThreeEvents()
-
   return (
     <div>
-      <img src={props.user.photo}  alt={props.user.name} />
+      <img src={props.user.photo}  alt={props.user.name} height="250" width="250"/>
       <h5>Welcome Back, {props.user.name}</h5>
       <div>
         <h5>Upcoming Events</h5>
         <div>
           {events.map(event => {
-            return <h5 key={event.id} onClick={() => {findEvent(event.id)}}>{event.title}</h5>
-          })}
+            return <h5 key={event.id} onClick={() => {findEvent(event.id)}}>{event.title}</h5>})}
         </div>
       </div>
       <button onClick={createEvent}>Create Event</button>
+      <button onClick={() => props.fetchEventfulAPI(props.user.hometown)}>Find Event</button>
     </div>
   )
 }
@@ -59,4 +58,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { fetchEvent, createEvent })(UserAvatar)
+export default connect(mapStateToProps, { fetchEvent, createEvent, fetchEventfulAPI })(UserAvatar)

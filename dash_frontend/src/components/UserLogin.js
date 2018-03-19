@@ -1,30 +1,40 @@
 import React from 'react'
+import {FlexyFlipCard} from 'flexy-flipcards'
 import { login, signup } from '../actions/users'
 import { connect } from 'react-redux'
 
 
-const Login = (props) => {
+class Login extends React.Component {
 
-  const handleLogin = (event) => {
+  handleLogin = (event) => {
     event.preventDefault()
     let user = {
-      name: event.target.name.value,
+      email: event.target.email.value,
       password: event.target.password.value
     }
-    props.login(user)
+    this.props.login(user)
   }
 
-  return (
-    <div>
-      <h1>Login</h1><br />
-        <form onSubmit={handleLogin}>
-          <input name="name" placeholder="name" /><br />
-          <input name="password" type="password" placeholder="password" /><br />
-          <input id="submit" type="submit"/>
-        </form>
-        <button onClick={props.signup}>Sign up</button>
-    </div>
-  )
+  render() {
+    return (
+      <FlexyFlipCard
+        frontBackgroundColor="#231b1b"
+        backBackgroundColor="#231b1b">
+      <div>
+        <h1 ref='flipper'>DASH</h1>
+      </div>
+      <div>
+        <h1>Login</h1><br />
+          <form onSubmit={this.handleLogin}>
+            <input name="email" placeholder="email" /><br />
+            <input name="password" type="password" placeholder="password" /><br />
+            <input ref='flipper' id="submit" type="submit"/>
+          </form>
+          <button onClick={this.props.signup}>Sign up</button>
+      </div>
+      </FlexyFlipCard>
+    )
+  }
 }
 
 export default connect(null, { login, signup })(Login)
