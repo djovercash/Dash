@@ -3,7 +3,7 @@
 // import {combineReducers} from 'redux'
 
 import {CREATE_EVENT, ADDING_EVENT, ADDED_EVENT, EDIT_EVENT, EDITING_EVENT, EDITED_EVENT, FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS, FETCHING_EVENTFUL_EVENTS, FETCHED_EVENTFUL_EVENTS, DELETE_EVENT} from '../actions/events'
-import {FETCHING_USER, FETCHED_USER, CREATING_USER, CREATED_USER, LOGOUT, SIGNUP, UPDATING_STATUS, UPDATED_STATUS} from '../actions/users'
+import {FETCHING_USERS, FETCHED_USERS, FETCHING_USER, FETCHED_USER, ADDING_FRIEND, ADDED_FRIEND, CREATING_USER, CREATED_USER, LOGOUT, SIGNUP, UPDATING_STATUS, UPDATED_STATUS} from '../actions/users'
 //
 const defaultState = {
   user: {name: '', email: '', photo: '', hometown: '', password_digest: '',
@@ -22,6 +22,7 @@ const defaultState = {
       invites: [{user_id: null, event_id: null, admin: null, status: '', host: null }]
     }]
   },
+  users: [],
   isLoading: false,
   createForm: false,
   editForm: false,
@@ -42,6 +43,11 @@ function rootReducer (state = defaultState, action) {
           localStorage.setItem("user_id", action.payload.id)
           return {...state, user: action.payload, isLoading: false, loggedIn: true};
         };
+    case FETCHING_USERS:
+        return {...state, isLoading: true};
+    case FETCHED_USERS:
+        const otherUsers = action.payload.filter(user => user.id !== state.user.id)
+        return {...state, users: otherUsers}
     case SIGNUP:
           return {...state, signup: true};
     case CREATING_USER:
@@ -49,6 +55,22 @@ function rootReducer (state = defaultState, action) {
     case CREATED_USER:
       localStorage.setItem("user_id", action.payload.id)
       return {...state, user: action.payload, isLoading: false, loggedIn: true, signup: false};
+    case ADDING_FRIEND:
+      return {...state, isLoading: true};
+    case ADDED_FRIEND:
+      return {...state,
+        user: {...state.user,
+          friends: [...state.user.friends,
+            {id: action.payload.id,
+              name: action.payload.name,
+              email: action.payload.email,
+              hometown: action.payload.hometown,
+              photo: action.payload.photo,
+              friend_category: []
+            }
+          ]
+        }
+      }
     case UPDATING_STATUS:
       return {...state, isLoading: true};
     case UPDATED_STATUS:

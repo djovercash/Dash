@@ -61,7 +61,6 @@ class UserEventfulList extends React.Component{
   }
 
   createEvent = (event) => {
-    console.log(event)
     const title = event.title ? event.title.substring(0, 30) + "..." : "No Title Offered"
     const address = event.venue_address ? event.venue_address : ""
     const city = event.city_name ? event.city_name : ""
@@ -85,7 +84,6 @@ class UserEventfulList extends React.Component{
       user_id: this.props.user.id,
       friends: []
     }
-    console.log("Eventful Create", action)
     this.props.addEvent(action)
   }
 

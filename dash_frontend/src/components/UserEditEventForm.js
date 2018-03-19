@@ -22,18 +22,14 @@ class UserEditEventForm extends React.Component {
     const startDateTimeObj = new Date(this.props.event.start_time)
     const startDateTimeString = startDateTimeObj.toString()
     const timeZone = startDateTimeString.slice(startDateTimeObj.length - 5)
-    console.log(startDateTimeString[36])
     if (startDateTimeString[36] === "D") {
-      console.log(this.props.event.start_time)
       const start = this.props.event.start_time.split("T")
       const startTimeObj = start[1].slice(0, -8)
       const startTimeArray = startTimeObj.split(":")
-      console.log(startTimeArray)
       let startTimeHour = parseInt(startTimeArray[0])
       if (startTimeHour < 12) {
         startTimeHour = `0${startTimeArray[0] - 4}`
         const startTime = startTimeHour + ":" + startTimeArray[1]
-        console.log(startTime)
         const end = this.props.event.end_time.split("T")
         const endTimeObj = end[1].slice(0, -8)
         const endTimeArray = endTimeObj.split(":")
@@ -41,7 +37,6 @@ class UserEditEventForm extends React.Component {
           if (endTimeHour < 12) {
             endTimeHour = `0${endTimeArray[0] - 4}`
             const endTime = endTimeHour + ":" + endTimeArray[1]
-            console.log(endTime)
             this.setState({
               title: this.props.event.title,
               location: this.props.event.location,
@@ -56,7 +51,6 @@ class UserEditEventForm extends React.Component {
           } else {
             endTimeHour = `${endTimeArray[0] - 4}`
             const endTime = endTimeHour + ":" + endTimeArray[1]
-            console.log(endTime)
             this.setState({
               title: this.props.event.title,
               location: this.props.event.location,
@@ -72,7 +66,6 @@ class UserEditEventForm extends React.Component {
         } else {
           startTimeHour = `${startTimeArray[0] - 4}`
           const startTime = startTimeHour + ":" + startTimeArray[1]
-          console.log(startTime)
           const end = this.props.event.end_time.split("T")
           const endTimeObj = end[1].slice(0, -8)
           const endTimeArray = endTimeObj.split(":")
@@ -80,7 +73,6 @@ class UserEditEventForm extends React.Component {
           if (endTimeHour < 12) {
             endTimeHour = `0${endTimeArray[0] - 4}`
             const endTime = endTimeHour + ":" + endTimeArray[1]
-            console.log(endTime)
             this.setState({
               title: this.props.event.title,
               location: this.props.event.location,
@@ -95,7 +87,6 @@ class UserEditEventForm extends React.Component {
           } else {
             endTimeHour = `${endTimeArray[0] - 4}`
             const endTime = endTimeHour + ":" + endTimeArray[1]
-            console.log(endTime)
             this.setState({
               title: this.props.event.title,
               location: this.props.event.location,
@@ -113,12 +104,10 @@ class UserEditEventForm extends React.Component {
         const start = this.props.event.start_time.split("T")
         const startTimeObj = start[1].slice(0, -8)
         const startTimeArray = startTimeObj.split(":")
-        console.log(startTimeArray)
         let startTimeHour = parseInt(startTimeArray[0])
         if (startTimeHour < 12) {
           startTimeHour = `0${startTimeArray[0] - 5}`
           const startTime = startTimeHour + ":" + startTimeArray[1]
-          console.log(startTime)
           const end = this.props.event.end_time.split("T")
           const endTimeObj = end[1].slice(0, -8)
           const endTimeArray = endTimeObj.split(":")
@@ -126,7 +115,6 @@ class UserEditEventForm extends React.Component {
             if (endTimeHour < 12) {
               endTimeHour = `0${endTimeArray[0] - 5}`
               const endTime = endTimeHour + ":" + endTimeArray[1]
-              console.log(endTime)
               this.setState({
                 title: this.props.event.title,
                 location: this.props.event.location,
@@ -141,7 +129,6 @@ class UserEditEventForm extends React.Component {
             } else {
               endTimeHour = `${endTimeArray[0] - 5}`
               const endTime = endTimeHour + ":" + endTimeArray[1]
-              console.log(endTime)
               this.setState({
                 title: this.props.event.title,
                 location: this.props.event.location,
@@ -157,7 +144,6 @@ class UserEditEventForm extends React.Component {
           } else {
             startTimeHour = `${startTimeArray[0] - 5}`
             const startTime = startTimeHour + ":" + startTimeArray[1]
-            console.log(startTime)
             const end = this.props.event.end_time.split("T")
             const endTimeObj = end[1].slice(0, -8)
             const endTimeArray = endTimeObj.split(":")
@@ -165,7 +151,6 @@ class UserEditEventForm extends React.Component {
             if (endTimeHour < 12) {
               endTimeHour = `0${endTimeArray[0] - 5}`
               const endTime = endTimeHour + ":" + endTimeArray[1]
-              console.log(endTime)
               this.setState({
                 title: this.props.event.title,
                 location: this.props.event.location,
@@ -180,7 +165,6 @@ class UserEditEventForm extends React.Component {
             } else {
               endTimeHour = `${endTimeArray[0] - 5}`
               const endTime = endTimeHour + ":" + endTimeArray[1]
-              console.log(endTime)
               this.setState({
                 title: this.props.event.title,
                 location: this.props.event.location,

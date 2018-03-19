@@ -38,7 +38,6 @@ class UserCreateEventForm extends React.Component {
       user_id: this.props.user.id,
       friends: this.state.invitedFriends
     }
-    console.log("Create Event", action)
     this.props.addEvent(action)
   }
 
