@@ -3,21 +3,28 @@ import {connect} from 'react-redux'
 import {logout} from '../actions/users'
 
 const Navbar = (props) => {
+  const firstName = props.user.name.split(" ")
   return (
     <div id="navbar">
-      <h3>WELCOME THE DASH LADIES AND GENTS</h3>
-      {props.loggedIn ?
-        <button onClick={props.logout}>Logout</button>
-        :
-        null
-      }
+      <div className="navbarItem">
+        <h3>DASH</h3>
+      </div>
+      <div className="navbarItem">
+        <h5>Welcome back, {firstName[0]} | {props.loggedIn ?
+          <button onClick={() => {props.history.push("/login")}}>Logout</button>
+          :
+          null
+        }
+        </h5>
+      </div>
     </div>
   )
 }
 
 function mapStateToProps(state) {
   return {
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    user: state.user
   }
 }
 

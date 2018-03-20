@@ -24,14 +24,29 @@ class UserEventsList extends React.Component {
 
   render() {
     const userCreatedEvents = this.props.user.events.filter(event => event.invites[0].admin === true)
+    const currentDate = new Date()
+    const userNewCreatedEvents = []
+    const userNewInvitedEvents = []
+    for (const newCreatedEvent of userCreatedEvents) {
+      let startTime = new Date(newCreatedEvent.start_time)
+      if (startTime > currentDate) {
+        userNewCreatedEvents.push(newCreatedEvent)
+      }
+    }
     const userInvitedEvents = this.props.user.events.filter(event => event.invites[0].admin !== true)
+    for (const newInvitedEvent of userInvitedEvents) {
+      let startTime = new Date(newInvitedEvent.start_time)
+      if (startTime > currentDate) {
+        userNewInvitedEvents.push(newInvitedEvent)
+      }
+    }
 
     return (
       <div>
         <div>
           <h4>Your Events</h4>
           <ul>
-            {userCreatedEvents.map(event => {
+            {userNewCreatedEvents.map(event => {
               return <li key={event.id} onClick={() => {this.findEvent(event.id)}}>{event.title} | Confirmed: {this.confirmedAttendees(event.id, this.props.user)} </li>
             })}
           </ul>
@@ -39,7 +54,7 @@ class UserEventsList extends React.Component {
         <div>
           <h4>Invites</h4>
           <ul>
-            {userInvitedEvents.map(event => {
+            {userNewInvitedEvents.map(event => {
               return <li key={event.id} onClick={() => {this.findEvent(event.id)}}>{event.title} | Status: {event.invites[0].status} </li>
             })}
           </ul>

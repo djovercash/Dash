@@ -4,7 +4,7 @@ import UserOptionsContainer from './UserOptionsContainer'
 
 const UserDetailContainer = () => {
   return (
-    <div>
+    <div id="userDetailContainer">
       <UserEventDetails />
       <UserOptionsContainer />
     </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment-timezone'
 import { connect } from 'react-redux'
 import { fetchEvent, createEvent, fetchEventfulAPI} from '../actions/events'
 
@@ -12,15 +13,25 @@ const UserAvatar = (props) => {
       return a > b ? 1 : a < b ? -1 : 0
     })
 
-    sortedEvents.filter(event => {
+    const currentDate = new Date()
+    const newestEvents = []
+
+    for (const event of sortedEvents) {
+      let startTime = new Date(event.start_time)
+      if (startTime > currentDate) {
+        newestEvents.push(event)
+      }
+    }
+
+    newestEvents.filter(event => {
       return event.invites[0].status === "confirmed"
     })
 
-    if (sortedEvents.length > 3) {
+    if (newestEvents.length > 3) {
       const topThreeEvents = sortedEvents.slice(0, 3)
       return topThreeEvents
     } else {
-      return sortedEvents
+      return newestEvents
     }
   }
 
@@ -36,16 +47,19 @@ const UserAvatar = (props) => {
   return (
     <div>
       <img src={props.user.photo}  alt={props.user.name} height="250" width="250"/>
-      <h5>Welcome Back, {props.user.name}</h5>
       <div>
-        <h5>Upcoming Events</h5>
+        <button onClick={createEvent}>Create Event</button>
+        <button onClick={() => props.fetchEventfulAPI(props.user.hometown)}>Find Event</button>
+      </div>
+      <div id="upcomingEvents">
+        <h3>Upcoming Events</h3>
         <div>
           {events.map(event => {
-            return <h5 key={event.id} onClick={() => {findEvent(event.id)}}>{event.title}</h5>})}
+            let start_time = event.start_time.toString()
+            let start_date = moment(start_time).format("MMM, Do YYYY")
+            return <h5 key={event.id} onClick={() => {findEvent(event.id)}}>{event.title.length > 10 ? event.title.substring(0, 10) : event.title} | {start_date}</h5>})}
         </div>
       </div>
-      <button onClick={createEvent}>Create Event</button>
-      <button onClick={() => props.fetchEventfulAPI(props.user.hometown)}>Find Event</button>
     </div>
   )
 }

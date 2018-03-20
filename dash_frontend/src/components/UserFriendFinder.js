@@ -27,27 +27,35 @@ class UserFriendFinder extends React.Component {
   }
 
   render() {
-    const filteredFriends = this.props.users.filter(user => user.name.toUpperCase().includes(this.state.friendFinder.toUpperCase()))
-    const friend = filteredFriends[0]
-    if (filteredFriends.length > 0) {
-      const filteredFriend = filteredFriends[0]
-      const friendsAlready = this.props.user.friends.find(friend => friend.id === filteredFriend.id)
-      return (
-        <div>
-          <h3>Find Friends</h3>
-          <input type="text" name="friendFinder" onChange={this.handleOnChange} />
-            <h5>{filteredFriends[0].name}</h5>
-            {!friendsAlready ?
-              <button onClick={() => {this.handleFriendship(filteredFriends[0])}}>Add Friend</button>
-              :
-              <h5>Already Friends</h5>
-            }
-        </div>
-      )
+    if (this.props.users) {
+      const filteredFriends = this.props.users.filter(user => user.name.toUpperCase().includes(this.state.friendFinder.toUpperCase()))
+      const friend = filteredFriends[0]
+      if (filteredFriends.length > 0) {
+        const filteredFriend = filteredFriends[0]
+        const friendsAlready = this.props.user.friends.find(friend => friend.id === filteredFriend.id)
+        return (
+          <div>
+            <h3>Find Friends</h3>
+            <input type="text" name="friendFinder" onChange={this.handleOnChange} />
+              <h5><img src={filteredFriends[0].photo} width="50px" height="50px" alt={filteredFriends[0].name}/>{filteredFriends[0].name}</h5>
+              {!friendsAlready ?
+                <button onClick={() => {this.handleFriendship(filteredFriends[0])}}>Add Friend</button>
+                :
+                <h5>Already Friends</h5>
+              }
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            <h3></h3>
+          </div>
+        )
+      }
     } else {
       return (
         <div>
-          <h3>Poop</h3>
+          <h3>Loading Friends</h3>
         </div>
       )
     }

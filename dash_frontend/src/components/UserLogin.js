@@ -13,26 +13,28 @@ class Login extends React.Component {
       password: event.target.password.value
     }
     this.props.login(user)
+    .then(()=>{this.props.history.push("/home")})
   }
 
   render() {
     return (
+      <div id="login">
       <FlexyFlipCard
-        frontBackgroundColor="#231b1b"
-        backBackgroundColor="#231b1b">
-      <div>
-        <h1 ref='flipper'>DASH</h1>
-      </div>
-      <div>
-        <h1>Login</h1><br />
-          <form onSubmit={this.handleLogin}>
-            <input name="email" placeholder="email" /><br />
-            <input name="password" type="password" placeholder="password" /><br />
+        frontBackgroundColor="rgba(0, 0, 0, 0.6)"
+        backBackgroundColor="rgba(0, 0, 0, 0.6)">
+        <div>
+          <h1 ref='flipper'>DASH</h1>
+        </div>
+        <div>
+          <form id="loginForm" onSubmit={this.handleLogin}>
+            <input className="loginInput" name="email" placeholder="email" />
+            <input className="loginInput" name="password" type="password" placeholder="password" />
             <input ref='flipper' id="submit" type="submit"/>
           </form>
-          <button onClick={this.props.signup}>Sign up</button>
-      </div>
+          <button onClick={() => {this.props.history.push("/signup")}}>Sign up</button>
+        </div>
       </FlexyFlipCard>
+      </div>
     )
   }
 }

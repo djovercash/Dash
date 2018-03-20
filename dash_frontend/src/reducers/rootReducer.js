@@ -3,7 +3,7 @@
 // import {combineReducers} from 'redux'
 
 import {CREATE_EVENT, ADDING_EVENT, ADDED_EVENT, EDIT_EVENT, EDITING_EVENT, EDITED_EVENT, FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS, FETCHING_EVENTFUL_EVENTS, FETCHED_EVENTFUL_EVENTS, DELETE_EVENT} from '../actions/events'
-import {FETCHING_USERS, FETCHED_USERS, FETCHING_USER, FETCHED_USER, ADDING_FRIEND, ADDED_FRIEND, CREATING_USER, CREATED_USER, LOGOUT, SIGNUP, UPDATING_STATUS, UPDATED_STATUS} from '../actions/users'
+import {FETCHING_USERS, FETCHED_USERS, FETCHING_USER, FETCHED_USER, ADDING_FRIEND, ADDED_FRIEND, CREATING_USER, CREATED_USER, LOGOUT, SIGNUP, NOSIGNUP, UPDATING_STATUS, UPDATED_STATUS} from '../actions/users'
 //
 const defaultState = {
   user: {name: '', email: '', photo: '', hometown: '', password_digest: '',
@@ -50,6 +50,8 @@ function rootReducer (state = defaultState, action) {
         return {...state, users: otherUsers}
     case SIGNUP:
           return {...state, signup: true};
+    case NOSIGNUP:
+          return {...state, signup: false};
     case CREATING_USER:
         return {...state, isLoading: true};
     case CREATED_USER:
@@ -125,7 +127,6 @@ function rootReducer (state = defaultState, action) {
     case ADDING_EVENT:
         return {...state, isLoading: true, createForm: false};
     case ADDED_EVENT:
-        console.log(action.payload)
         return {...state,
           user: {
             ...state.user,

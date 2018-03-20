@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Route, Switch, Redirect, withRouter} from 'react-router-dom';
 import UserContainer from './containers/UserContainer'
 import Navbar from './containers/Navbar'
 import Footer from './containers/Footer'
@@ -17,39 +18,27 @@ class App extends Component {
     }
   }
 
-  whatToRender() {
-  if (this.props.loggedIn) {
-    return (
-      <div>
-        <Navbar />
-        <UserContainer />
-        <Footer />
-      </div>
-    )
-  } else if (this.props.signup) {
-    return (
-      <div>
-        <Navbar />
-        <Signup />
-        <Footer />
-      </div>
-    )
-  } else {
-    return (
-      <div>
-        <Navbar />
-        <Login />
-        <Footer />
-      </div>
-    )
-  }
-}
-
-
   render() {
     return (
       <div className="App">
-        {this.whatToRender()}
+        <Switch>
+          <Route path="/home" render={(routerParams) => {
+            return (
+              <div>
+                <Navbar {...routerParams}/>
+                <UserContainer />
+                <Footer />
+              </div>
+            )
+          }}/>
+          <Route path="/signup" render={(routerParams) => {
+            return <Signup {...routerParams}/>
+          }}/>
+          <Route path="/login" render={(routerParams) => {
+            return <Login {...routerParams}/>
+          }}/>
+        </Switch>
+
       </div>
     );
   }
@@ -62,4 +51,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {fetchUser})(App);
+export default withRouter(connect(mapStateToProps, {fetchUser})(App));

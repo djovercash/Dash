@@ -5,6 +5,7 @@ export const FETCHED_USERS = "FETCHED_USERS"
 export const FETCHING_USER = "FETCHING_USER"
 export const FETCHED_USER = "FETCHED_USER"
 export const SIGNUP = "SIGNUP"
+export const NOSIGNUP = "NO_SIGNUP"
 export const ADDING_FRIEND = "ADDING_FRIEND"
 export const ADDED_FRIEND = "ADDED_FRIEND"
 export const CREATING_USER = "CREATING_USER"
@@ -16,7 +17,7 @@ export const LOGOUT = "LOGOUT"
 export function login(user) {
   return function(dispatch) {
     dispatch({ type: FETCHING_USER })
-    UserApi.login(user.email, user.password).then(user => {
+    return UserApi.login(user.email, user.password).then(user => {
       dispatch({
         type: FETCHED_USER,
         payload: user
@@ -64,6 +65,12 @@ export function createUser(user) {
 export function signup() {
   return {
     type: SIGNUP
+  }
+}
+
+export function noSignup() {
+  return {
+    type: NOSIGNUP
   }
 }
 

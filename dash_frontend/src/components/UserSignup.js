@@ -1,7 +1,8 @@
 import React from 'react'
-import ReactFilestack, { client } from 'filestack-react';
+import ReactFilestack from 'filestack-react';
+import {FlexyFlipCard} from 'flexy-flipcards'
 import {connect} from 'react-redux'
-import {createUser} from '../actions/users'
+import {createUser, noSignup} from '../actions/users'
 
 class Signup extends React.Component {
 
@@ -12,7 +13,7 @@ class Signup extends React.Component {
   handleSignup = (event) => {
     event.preventDefault()
     let user = {
-      name: event.target.name.value,
+      name: event.target.firstName.value + " " + event.target.lastName.value,
       password: event.target.password.value,
       password_confirmation: event.target.passwordConfirmation.value,
       email: event.target.email.value,
@@ -33,31 +34,35 @@ class Signup extends React.Component {
 
   render() {
     return (
-      <div>
-        <h3>BETTA SIGNUP, YALL</h3>
-        <form onSubmit={this.handleSignup}>
-          <h3>Name: </h3>
-          <input type="text" name="name" placeholder="name" />
-          <h3>Password: </h3>
-          <input type="password" name="password" placeholder="Password" />
-          <h3>Password Confirmation: </h3>
-          <input type="password" name="passwordConfirmation" placeholder="Password Confirmation" />
-          <h3>Email: </h3>
-          <input type="email" name="email" placeholder="email" />
-          <h3>Hometown: </h3>
-          <input type="hometown" name="hometown" placeholder="hometown" />
-          <br />
-          <ReactFilestack
-            apikey={'AO1rF1TdISrSzbwTPEHFez'}
-            buttonText="Select a photo"
-            buttonClass="classname"
-            onSuccess={this.onSuccess}
-          />
-          <input id="submit" type="submit" value="Submit" />
-        </form>
+      <div id="signup">
+        <FlexyFlipCard
+          frontBackgroundColor="rgba(0, 0, 0, 0.6)"
+          backBackgroundColor="rgba(0, 0, 0, 0.6)">
+          <div>
+            <form id="loginForm" onSubmit={this.handleSignup}>
+              <input className="signupInput" type="text" name="firstName" placeholder="First Name" />
+              <input className="signupInput" type="text" name="lastName" placeholder="Last Name" />
+              <input className="signupInput" type="password" name="password" placeholder="Password" />
+              <input className="signupInput" type="password" name="passwordConfirmation" placeholder="Password Confirmation" />
+              <input className="signupInput" type="email" name="email" placeholder="Email" />
+              <input className="signupInput" type="hometown" name="hometown" placeholder="Hometown" />
+              <ReactFilestack
+                apikey={'AO1rF1TdISrSzbwTPEHFez'}
+                buttonText="Select a photo"
+                buttonClass="classname"
+                onSuccess={this.onSuccess}
+              />
+              <input id="submit" type="submit" value="Submit" /><br/>
+            </form>
+            <button onClick={() => {this.props.history.push("/login")}}>Go Back</button>
+          </div>
+          <div>
+            <h1 ref='flipper'>DASH</h1>
+          </div>
+        </FlexyFlipCard>
       </div>
     )
   }
 }
 
-export default connect(null, { createUser })(Signup)
+export default connect(null, { createUser, noSignup })(Signup)
