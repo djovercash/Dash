@@ -53,7 +53,7 @@ export function fetchUsers() {
 export function createUser(user) {
   return function(dispatch) {
     dispatch({ type: CREATING_USER})
-    UserApi.createUser(user).then(newUser => {
+    return UserApi.createUser(user).then(newUser => {
       dispatch({
         type: CREATED_USER,
         payload: newUser

@@ -21,6 +21,7 @@ class Signup extends React.Component {
       photo: this.state.photo
     }
     this.props.createUser(user)
+    .then(()=>{this.props.history.push("/home")})
     this.setState({
       photo: ''
     })
