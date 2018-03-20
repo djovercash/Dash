@@ -46,6 +46,7 @@ class userApi {
     return fetch(`${INVITEURL}/${id}`, {
       method: "PATCH",
       headers: {
+        "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({

@@ -23,6 +23,7 @@ class UserEventsList extends React.Component {
   }
 
   render() {
+    console.log(this.props.user.events)
     const userCreatedEvents = this.props.user.events.filter(event => event.invites[0].admin === true)
     const currentDate = new Date()
     const userNewCreatedEvents = []
@@ -31,6 +32,7 @@ class UserEventsList extends React.Component {
       let startTime = new Date(newCreatedEvent.start_time)
       if (startTime > currentDate) {
         userNewCreatedEvents.push(newCreatedEvent)
+        console.log(userNewCreatedEvents)
       }
     }
     const userInvitedEvents = this.props.user.events.filter(event => event.invites[0].admin !== true)

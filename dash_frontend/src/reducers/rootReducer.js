@@ -161,7 +161,6 @@ function rootReducer (state = defaultState, action) {
         const nonEditedUserEvents = state.user.events.filter(event => event.id !== action.payload.id)
         const userInvite = action.payload.users.filter(user => user.id === state.user.id)
         const userInvite2 = userInvite.find(invite => invite.id === state.user.id)
-        console.log(action.payload)
         return {...state,
           user: {
             ...state.user,

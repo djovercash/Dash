@@ -1,5 +1,10 @@
 class InvitesController < ApplicationController
 
+  def show
+    @invite = Invite.find_by(id: params[:id])
+    render json:@invite
+  end
+
   def update
     @invite = Invite.find_by(id: params[:id])
     @invite.update(status: params[:status])
