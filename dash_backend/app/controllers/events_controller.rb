@@ -15,9 +15,13 @@ class EventsController < ApplicationController
     if @event.valid?
       @event.save
       Invite.create(user_id: params[:user_id], event_id: @event.id, admin: true, status: "confirmed", host: true )
+      @user = User.find_by(id: params[:user_id])
       @friends = params[:friends]
       @friends.each do |friend|
         Invite.create(user_id: friend["id"], event_id: @event.id)
+      end
+      @friends.each do |friend|
+        Emailer.sendEmail(@user.name).deliver!
       end
       render json:@event
     else

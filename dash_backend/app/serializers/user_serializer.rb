@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :photo, :hometown, :password_digest, :friends, :events
+  attributes :id, :name, :email, :photo, :hometown, :friends, :events
 
   def friends
     friend_category = []
@@ -21,7 +21,6 @@ class UserSerializer < ActiveModel::Serializer
 
     object.events.each do |event|
       custom_event = event.attributes
-
       custom_event[:title] = event.title
       custom_event[:invites] = event.invites.select{|invite| invite.user_id == object.id}
 
