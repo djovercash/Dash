@@ -4,6 +4,11 @@ import {logout} from '../actions/users'
 
 const Navbar = (props) => {
   const firstName = props.user.name.split(" ")
+
+  const logout = () => {
+    props.logout()
+    props.history.push("/login")
+  }
   return (
     <div id="navbar">
       <div className="navbarItem">
@@ -11,7 +16,7 @@ const Navbar = (props) => {
       </div>
       <div className="navbarItem">
         <h5>Welcome back, {firstName[0]} | {props.loggedIn ?
-          <button onClick={() => {props.history.push("/login")}}>Logout</button>
+          <button onClick={logout}>Logout</button>
           :
           null
         }

@@ -29,12 +29,11 @@ class UserFriendFinder extends React.Component {
   render() {
     if (this.props.users) {
       const filteredFriends = this.props.users.filter(user => user.name.toUpperCase().includes(this.state.friendFinder.toUpperCase()))
-      const friend = filteredFriends[0]
-      if (filteredFriends.length > 0) {
+      if (filteredFriends.length > 0 && this.state.friendFinder !== '') {
         const filteredFriend = filteredFriends[0]
         const friendsAlready = this.props.user.friends.find(friend => friend.id === filteredFriend.id)
         return (
-          <div>
+          <div className="friendFinder">
             <h3>Find Friends</h3>
             <input type="text" name="friendFinder" onChange={this.handleOnChange} />
               <h5><img src={filteredFriends[0].photo} width="50px" height="50px" alt={filteredFriends[0].name}/>{filteredFriends[0].name}</h5>
@@ -47,15 +46,17 @@ class UserFriendFinder extends React.Component {
         )
       } else {
         return (
-          <div>
-            <h3></h3>
+          <div className="friendFinder">
+            <h3>Find Friends</h3>
+            <input type="text" name="friendFinder" onChange={this.handleOnChange} />
           </div>
         )
       }
     } else {
       return (
-        <div>
-          <h3>Loading Friends</h3>
+        <div className="friendFinder">
+          <h3>Find Friends</h3>
+          <input type="text" name="friendFinder" onChange={this.handleOnChange} />
         </div>
       )
     }

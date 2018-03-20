@@ -75,9 +75,11 @@ export function addEvent(event) {
 }
 
 export function updateEvent(event) {
+  console.log(event)
   return function(dispatch) {
     dispatch({ type: EDITING_EVENT})
     eventApi.updateEvent(event).then(returnedEvent => {
+      console.log(returnedEvent)
       dispatch({
         type: EDITED_EVENT,
         payload: returnedEvent

@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment-timezone'
 import {connect} from 'react-redux'
 import {updateEvent} from '../actions/events'
 
@@ -19,167 +20,189 @@ class UserEditEventForm extends React.Component {
   }
 
   componentDidMount() {
-    const startDateTimeObj = new Date(this.props.event.start_time)
-    const startDateTimeString = startDateTimeObj.toString()
-    const timeZone = startDateTimeString.slice(startDateTimeObj.length - 5)
-    if (startDateTimeString[36] === "D") {
-      const start = this.props.event.start_time.split("T")
-      const startTimeObj = start[1].slice(0, -8)
-      const startTimeArray = startTimeObj.split(":")
-      let startTimeHour = parseInt(startTimeArray[0])
-      if (startTimeHour < 12) {
-        startTimeHour = `0${startTimeArray[0] - 4}`
-        const startTime = startTimeHour + ":" + startTimeArray[1]
-        const end = this.props.event.end_time.split("T")
-        const endTimeObj = end[1].slice(0, -8)
-        const endTimeArray = endTimeObj.split(":")
-        let endTimeHour = parseInt(endTimeArray[0])
-          if (endTimeHour < 12) {
-            endTimeHour = `0${endTimeArray[0] - 4}`
-            const endTime = endTimeHour + ":" + endTimeArray[1]
-            this.setState({
-              title: this.props.event.title,
-              location: this.props.event.location,
-              description: this.props.event.description,
-              start_date: start[0],
-              start_time: startTime,
-              end_date: end[0],
-              end_time: endTime,
-              friends: this.props.user.friends,
-              invited: this.props.event.users
-            })
-          } else {
-            endTimeHour = `${endTimeArray[0] - 4}`
-            const endTime = endTimeHour + ":" + endTimeArray[1]
-            this.setState({
-              title: this.props.event.title,
-              location: this.props.event.location,
-              description: this.props.event.description,
-              start_date: start[0],
-              start_time: startTime,
-              end_date: end[0],
-              end_time: endTime,
-              friends: this.props.user.friends,
-              invited: this.props.event.users
-            })
-          }
-        } else {
-          startTimeHour = `${startTimeArray[0] - 4}`
-          const startTime = startTimeHour + ":" + startTimeArray[1]
-          const end = this.props.event.end_time.split("T")
-          const endTimeObj = end[1].slice(0, -8)
-          const endTimeArray = endTimeObj.split(":")
-          let endTimeHour = parseInt(endTimeArray[0])
-          if (endTimeHour < 12) {
-            endTimeHour = `0${endTimeArray[0] - 4}`
-            const endTime = endTimeHour + ":" + endTimeArray[1]
-            this.setState({
-              title: this.props.event.title,
-              location: this.props.event.location,
-              description: this.props.event.description,
-              start_date: start[0],
-              start_time: startTime,
-              end_date: end[0],
-              end_time: endTime,
-              friends: this.props.user.friends,
-              invited: this.props.event.users
-            })
-          } else {
-            endTimeHour = `${endTimeArray[0] - 4}`
-            const endTime = endTimeHour + ":" + endTimeArray[1]
-            this.setState({
-              title: this.props.event.title,
-              location: this.props.event.location,
-              description: this.props.event.description,
-              start_date: start[0],
-              start_time: startTime,
-              end_date: end[0],
-              end_time: endTime,
-              friends: this.props.user.friends,
-              invited: this.props.event.users
-            })
-          }
-        }
-      } else {
-        const start = this.props.event.start_time.split("T")
-        const startTimeObj = start[1].slice(0, -8)
-        const startTimeArray = startTimeObj.split(":")
-        let startTimeHour = parseInt(startTimeArray[0])
-        if (startTimeHour < 12) {
-          startTimeHour = `0${startTimeArray[0] - 5}`
-          const startTime = startTimeHour + ":" + startTimeArray[1]
-          const end = this.props.event.end_time.split("T")
-          const endTimeObj = end[1].slice(0, -8)
-          const endTimeArray = endTimeObj.split(":")
-          let endTimeHour = parseInt(endTimeArray[0])
-            if (endTimeHour < 12) {
-              endTimeHour = `0${endTimeArray[0] - 5}`
-              const endTime = endTimeHour + ":" + endTimeArray[1]
-              this.setState({
-                title: this.props.event.title,
-                location: this.props.event.location,
-                description: this.props.event.description,
-                start_date: start[0],
-                start_time: startTime,
-                end_date: end[0],
-                end_time: endTime,
-                friends: this.props.user.friends,
-                invited: this.props.event.users
-              })
-            } else {
-              endTimeHour = `${endTimeArray[0] - 5}`
-              const endTime = endTimeHour + ":" + endTimeArray[1]
-              this.setState({
-                title: this.props.event.title,
-                location: this.props.event.location,
-                description: this.props.event.description,
-                start_date: start[0],
-                start_time: startTime,
-                end_date: end[0],
-                end_time: endTime,
-                friends: this.props.user.friends,
-                invited: this.props.event.users
-              })
-            }
-          } else {
-            startTimeHour = `${startTimeArray[0] - 5}`
-            const startTime = startTimeHour + ":" + startTimeArray[1]
-            const end = this.props.event.end_time.split("T")
-            const endTimeObj = end[1].slice(0, -8)
-            const endTimeArray = endTimeObj.split(":")
-            let endTimeHour = parseInt(endTimeArray[0])
-            if (endTimeHour < 12) {
-              endTimeHour = `0${endTimeArray[0] - 5}`
-              const endTime = endTimeHour + ":" + endTimeArray[1]
-              this.setState({
-                title: this.props.event.title,
-                location: this.props.event.location,
-                description: this.props.event.description,
-                start_date: start[0],
-                start_time: startTime,
-                end_date: end[0],
-                end_time: endTime,
-                friends: this.props.user.friends,
-                invited: this.props.event.users
-              })
-            } else {
-              endTimeHour = `${endTimeArray[0] - 5}`
-              const endTime = endTimeHour + ":" + endTimeArray[1]
-              this.setState({
-                title: this.props.event.title,
-                location: this.props.event.location,
-                description: this.props.event.description,
-                start_date: start[0],
-                start_time: startTime,
-                end_date: end[0],
-                end_time: endTime,
-                friends: this.props.user.friends,
-                invited: this.props.event.users
-              })
-            }
-          }
-      }
+    const startDateTime = moment(this.props.event.start_time).tz("America/New_York").format()
+    const endDateTime = moment(this.props.event.end_time).tz("America/New_York").format()
+    const startDateTimeSplit = startDateTime.split("T")
+    const startDate = startDateTimeSplit[0]
+    const startTime = startDateTimeSplit[1].slice(0, -9)
+    const endDateTimeSplit = endDateTime.split("T")
+    const endDate = endDateTimeSplit[0]
+    const endTime = endDateTimeSplit[1].slice(0, -9)
+      this.setState({
+        title: this.props.event.title,
+        location: this.props.event.location,
+        description: this.props.event.description,
+        start_date: startDate,
+        start_time: startTime,
+        end_date: endDate,
+        end_time: endTime,
+        friends: this.props.user.friends,
+        invited: this.props.event.users
+      })
     }
+    // console.log(endDate, endTime)
+    //
+    // const startDateTimeObj = new Date(this.props.event.start_time)
+    // const startDateTimeString = startDateTimeObj.toString()
+    // const timeZone = startDateTimeString.slice(startDateTimeObj.length - 5)
+    // if (startDateTimeString[36] === "D") {
+    //   const start = this.props.event.start_time.split("T")
+    //   const startTimeObj = start[1].slice(0, -8)
+    //   const startTimeArray = startTimeObj.split(":")
+    //   let startTimeHour = parseInt(startTimeArray[0])
+    //   if (startTimeHour < 12) {
+    //     startTimeHour = `0${startTimeArray[0] - 4}`
+    //     const startTime = startTimeHour + ":" + startTimeArray[1]
+    //     const end = this.props.event.end_time.split("T")
+    //     const endTimeObj = end[1].slice(0, -8)
+    //     const endTimeArray = endTimeObj.split(":")
+    //     let endTimeHour = parseInt(endTimeArray[0])
+    //       if (endTimeHour < 12) {
+    //         endTimeHour = `0${endTimeArray[0] - 4}`
+    //         const endTime = endTimeHour + ":" + endTimeArray[1]
+    //         this.setState({
+    //           title: this.props.event.title,
+    //           location: this.props.event.location,
+    //           description: this.props.event.description,
+    //           start_date: startDate,
+    //           start_time: startTime,
+    //           end_date: end[0],
+    //           end_time: endTime,
+    //           friends: this.props.user.friends,
+    //           invited: this.props.event.users
+    //         })
+    //       } else {
+    //         endTimeHour = `${endTimeArray[0] - 4}`
+    //         const endTime = endTimeHour + ":" + endTimeArray[1]
+    //         this.setState({
+    //           title: this.props.event.title,
+    //           location: this.props.event.location,
+    //           description: this.props.event.description,
+    //           start_date: startDate,
+    //           start_time: startTime,
+    //           end_date: end[0],
+    //           end_time: endTime,
+    //           friends: this.props.user.friends,
+    //           invited: this.props.event.users
+    //         })
+    //       }
+    //     } else {
+    //       startTimeHour = `${startTimeArray[0] - 4}`
+    //       const startTime = startTimeHour + ":" + startTimeArray[1]
+    //       const end = this.props.event.end_time.split("T")
+    //       const endTimeObj = end[1].slice(0, -8)
+    //       const endTimeArray = endTimeObj.split(":")
+    //       let endTimeHour = parseInt(endTimeArray[0])
+    //       if (endTimeHour < 12) {
+    //         endTimeHour = `0${endTimeArray[0] - 4}`
+    //         const endTime = endTimeHour + ":" + endTimeArray[1]
+    //         this.setState({
+    //           title: this.props.event.title,
+    //           location: this.props.event.location,
+    //           description: this.props.event.description,
+    //           start_date: startDate,
+    //           start_time: startTime,
+    //           end_date: end[0],
+    //           end_time: endTime,
+    //           friends: this.props.user.friends,
+    //           invited: this.props.event.users
+    //         })
+    //       } else {
+    //         endTimeHour = `${endTimeArray[0] - 4}`
+    //         const endTime = endTimeHour + ":" + endTimeArray[1]
+    //         this.setState({
+    //           title: this.props.event.title,
+    //           location: this.props.event.location,
+    //           description: this.props.event.description,
+    //           start_date: startDate,
+    //           start_time: startTime,
+    //           end_date: end[0],
+    //           end_time: endTime,
+    //           friends: this.props.user.friends,
+    //           invited: this.props.event.users
+    //         })
+    //       }
+    //     }
+    //   } else {
+    //     const start = this.props.event.start_time.split("T")
+    //     const startTimeObj = start[1].slice(0, -8)
+    //     const startTimeArray = startTimeObj.split(":")
+    //     let startTimeHour = parseInt(startTimeArray[0])
+    //     if (startTimeHour < 12) {
+    //       startTimeHour = `0${startTimeArray[0] - 5}`
+    //       const startTime = startTimeHour + ":" + startTimeArray[1]
+    //       const end = this.props.event.end_time.split("T")
+    //       const endTimeObj = end[1].slice(0, -8)
+    //       const endTimeArray = endTimeObj.split(":")
+    //       let endTimeHour = parseInt(endTimeArray[0])
+    //         if (endTimeHour < 12) {
+    //           endTimeHour = `0${endTimeArray[0] - 5}`
+    //           const endTime = endTimeHour + ":" + endTimeArray[1]
+    //           this.setState({
+    //             title: this.props.event.title,
+    //             location: this.props.event.location,
+    //             description: this.props.event.description,
+    //             start_date: startDate,
+    //             start_time: startTime,
+    //             end_date: end[0],
+    //             end_time: endTime,
+    //             friends: this.props.user.friends,
+    //             invited: this.props.event.users
+    //           })
+    //         } else {
+    //           endTimeHour = `${endTimeArray[0] - 5}`
+    //           const endTime = endTimeHour + ":" + endTimeArray[1]
+    //           this.setState({
+    //             title: this.props.event.title,
+    //             location: this.props.event.location,
+    //             description: this.props.event.description,
+    //             start_date: startDate,
+    //             start_time: startTime,
+    //             end_date: end[0],
+    //             end_time: endTime,
+    //             friends: this.props.user.friends,
+    //             invited: this.props.event.users
+    //           })
+    //         }
+    //       } else {
+    //         startTimeHour = `${startTimeArray[0] - 5}`
+    //         const startTime = startTimeHour + ":" + startTimeArray[1]
+    //         const end = this.props.event.end_time.split("T")
+    //         const endTimeObj = end[1].slice(0, -8)
+    //         const endTimeArray = endTimeObj.split(":")
+    //         let endTimeHour = parseInt(endTimeArray[0])
+    //         if (endTimeHour < 12) {
+    //           endTimeHour = `0${endTimeArray[0] - 5}`
+    //           const endTime = endTimeHour + ":" + endTimeArray[1]
+    //           this.setState({
+    //             title: this.props.event.title,
+    //             location: this.props.event.location,
+    //             description: this.props.event.description,
+    //             start_date: startDate,
+    //             start_time: startTime,
+    //             end_date: end[0],
+    //             end_time: endTime,
+    //             friends: this.props.user.friends,
+    //             invited: this.props.event.users
+    //           })
+    //         } else {
+    //           endTimeHour = `${endTimeArray[0] - 5}`
+    //           const endTime = endTimeHour + ":" + endTimeArray[1]
+    //           this.setState({
+    //             title: this.props.event.title,
+    //             location: this.props.event.location,
+    //             description: this.props.event.description,
+    //             start_date: startDate,
+    //             start_time: startTime,
+    //             end_date: end[0],
+    //             end_time: endTime,
+    //             friends: this.props.user.friends,
+    //             invited: this.props.event.users
+    //           })
+    //         }
+    //       }
+    //   }
+    // }
 
   handleOnChange = (e) => {
     this.setState({
@@ -217,7 +240,7 @@ class UserEditEventForm extends React.Component {
         user_id: this.props.user.id,
         friends: this.state.invitedFriends
       }
-      console.log("Edit Event", action)
+      console.log(action)
       this.props.updateEvent(action)
     // }
   }
@@ -225,7 +248,7 @@ class UserEditEventForm extends React.Component {
   renderFriendsForEventInvites() {
     const filteredFriends = this.state.friends.filter(friend => friend.name.toUpperCase().includes(this.state.friendFilter.toUpperCase()))
     let filteredFriend = {}
-    if (filteredFriends.length > 0) {
+    if (filteredFriends.length > 0 && this.state.friendFilter !== '') {
       filteredFriend = filteredFriends[0]
       let invited = this.state.invited.filter(invite => invite.name === filteredFriend.name)
       if (invited.length === 0) {

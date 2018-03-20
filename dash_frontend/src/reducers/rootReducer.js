@@ -89,13 +89,11 @@ function rootReducer (state = defaultState, action) {
           events: [
             ...nonEditedUserEventInvites,
             {
-              email: editedUserEventInvites[0].email,
               description: editedUserEventInvites[0].description,
-              hometown: editedUserEventInvites[0].hometown,
+              end_time: editedUserEventInvites[0].end_time,
               id: editedUserEventInvites[0].id,
               invites: [invite],
-              name: editedUserEventInvites[0].name,
-              photo: editedUserEventInvites[0].photo,
+              start_time: editedUserEventInvites[0].start_time,
               title: editedUserEventInvites[0].title
             }
           ]
@@ -127,6 +125,7 @@ function rootReducer (state = defaultState, action) {
     case ADDING_EVENT:
         return {...state, isLoading: true, createForm: false};
     case ADDED_EVENT:
+        console.log(action.payload)
         return {...state,
           user: {
             ...state.user,
@@ -162,6 +161,7 @@ function rootReducer (state = defaultState, action) {
         const nonEditedUserEvents = state.user.events.filter(event => event.id !== action.payload.id)
         const userInvite = action.payload.users.filter(user => user.id === state.user.id)
         const userInvite2 = userInvite.find(invite => invite.id === state.user.id)
+        console.log(action.payload)
         return {...state,
           user: {
             ...state.user,

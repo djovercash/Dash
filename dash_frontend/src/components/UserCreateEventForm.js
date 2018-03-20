@@ -43,7 +43,7 @@ class UserCreateEventForm extends React.Component {
 
   renderFriendsForEventInvites() {
     const filteredFriends = this.state.friends.filter(friend => friend.name.toUpperCase().includes(this.state.friendFilter.toUpperCase()))
-    if (filteredFriends.length > 0) {
+    if (filteredFriends.length > 0 && this.state.friendFilter !== '') {
       return (
         <div>
           <h4>{filteredFriends[0].name} | </h4>
@@ -54,6 +54,8 @@ class UserCreateEventForm extends React.Component {
            }
         </div>
       )
+    } else {
+      null
     }
   }
 

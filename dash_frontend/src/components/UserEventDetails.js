@@ -17,51 +17,58 @@ const UserEventDetails = (props) => {
   }
 
   const fixTime = (time) => {
-    const startDateTimeObj = new Date(props.event.start_time)
-    const startDateTimeString = startDateTimeObj.toString()
-    const timeZone = startDateTimeString.slice(startDateTimeObj.length - 5)
-    if (startDateTimeString[36] === "D") {
-      const fixedTime = time.slice(0, -8)
-      const splitT = fixedTime.split("T")
-      const date = splitT[0]
-      const arrayTime = splitT[1].split(":")
-      const hour = parseInt(arrayTime[0])
-      const fixedHour = hour - 4
-      if (fixedHour < 12) {
-        const finalHour = `0${fixedHour}`
-        const newTime = finalHour + ":" + arrayTime[1]
-        const newDateTime = date + " " + newTime
-        const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
-        return momo
-      } else {
-        const finalHour = fixedHour.toString()
-        const newTime = finalHour + ":" + arrayTime[1]
-        const newDateTime = date + " " + newTime
-        const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
-        return momo
-      }
-    } else {
-      const fixedTime = time.slice(0, -8)
-      const splitT = fixedTime.split("T")
-      const date = splitT[0]
-      const arrayTime = splitT[1].split(":")
-      const hour = parseInt(arrayTime[0])
-      const fixedHour = hour - 5
-      if (fixedHour < 12) {
-        const finalHour = `0${fixedHour}`
-        const newTime = finalHour + ":" + arrayTime[1]
-        const newDateTime = date + " " + newTime
-        const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
-        return momo
-      } else {
-        const finalHour = fixedHour.toString()
-        const newTime = finalHour + ":" + arrayTime[1]
-        const newDateTime = date + " " + newTime
-        const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
-        return momo
-      }
-    }
+    const dateTimeObj = new Date(time)
+    const dateTimeString = dateTimeObj.toString()
+    const momo = moment(dateTimeString).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
+    return momo
   }
+
+  // const fixTime = (time) => {
+  //   console.log(time)
+  //   const startDateTimeObj = new Date(time)
+  //   const startDateTimeString = startDateTimeObj.toString()
+  //   if (startDateTimeString[36] === "D") {
+  //     const fixedTime = time.slice(0, -8)
+  //     const splitT = fixedTime.split("T")
+  //     const date = splitT[0]
+  //     const arrayTime = splitT[1].split(":")
+  //     const hour = parseInt(arrayTime[0])
+  //     const fixedHour = hour - 4
+  //     if (fixedHour < 12) {
+  //       const finalHour = `0${fixedHour}`
+  //       const newTime = finalHour + ":" + arrayTime[1]
+  //       const newDateTime = date + " " + newTime
+  //       const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
+  //       return momo
+  //     } else {
+  //       const finalHour = fixedHour.toString()
+  //       const newTime = finalHour + ":" + arrayTime[1]
+  //       const newDateTime = date + " " + newTime
+  //       const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
+  //       return momo
+  //     }
+  //   } else {
+  //     const fixedTime = time.slice(0, -8)
+  //     const splitT = fixedTime.split("T")
+  //     const date = splitT[0]
+  //     const arrayTime = splitT[1].split(":")
+  //     const hour = parseInt(arrayTime[0])
+  //     const fixedHour = hour - 5
+  //     if (fixedHour < 12) {
+  //       const finalHour = `0${fixedHour}`
+  //       const newTime = finalHour + ":" + arrayTime[1]
+  //       const newDateTime = date + " " + newTime
+  //       const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
+  //       return momo
+  //     } else {
+  //       const finalHour = fixedHour.toString()
+  //       const newTime = finalHour + ":" + arrayTime[1]
+  //       const newDateTime = date + " " + newTime
+  //       const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
+  //       return momo
+  //     }
+  //   }
+  // }
 
 
   const eventOwner = () => {
@@ -109,6 +116,7 @@ const UserEventDetails = (props) => {
         </div>
       )
     } else {
+      console.log(props.event)
       return (
         <div>
           <h1>{props.event.title}</h1>

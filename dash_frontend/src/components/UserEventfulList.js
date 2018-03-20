@@ -84,6 +84,7 @@ class UserEventfulList extends React.Component{
       user_id: this.props.user.id,
       friends: []
     }
+    console.log(action)
     this.props.addEvent(action)
   }
 
