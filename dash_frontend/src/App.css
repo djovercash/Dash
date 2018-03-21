@@ -66,8 +66,12 @@
   margin: 2%;
 }
 
+.eventItem {
+  color: rgb(217, 217, 217);
+}
+
 #userDetailContainer {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
   width: 70%;
 }
 
@@ -120,9 +124,15 @@
   justify-content: space-around;
 }
 
-#eventDetails {
+.eventBox {
+  color: rgb(64, 224, 208);
+  height: 50%;
+  width: 100%;
+}
+.eventDetails {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  color:rgb(217, 217, 217);
 }
 
 @keyframes App-logo-spin {

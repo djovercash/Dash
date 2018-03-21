@@ -30,6 +30,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = User.find_by(id: params[:id])
+    if @user.valid?
+      @user.update(user_params)
+      render json:@user
+    else
+      render json:{message: "Invalid Information. Please try again"}, status: 401
+    end
+  end
+
+  def destroy
+    @user = User.find_by(id: params[:id])
+    @user.destroy
+    render json:{message: "User Destroyed"}
+  end
+
   private
 
   def user_params

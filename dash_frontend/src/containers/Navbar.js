@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {logout} from '../actions/users'
+import {logout, account} from '../actions/users'
 
 const Navbar = (props) => {
   const firstName = props.user.name.split(" ")
@@ -9,6 +9,7 @@ const Navbar = (props) => {
     props.logout()
     props.history.push("/login")
   }
+
   return (
     <div id="navbar">
       <div className="navbarItem">
@@ -16,7 +17,10 @@ const Navbar = (props) => {
       </div>
       <div className="navbarItem">
         <h5>Welcome back, {firstName[0]} | {props.loggedIn ?
-          <button onClick={logout}>Logout</button>
+          <div>
+            <button onClick={logout}>Logout</button>
+            <button onClick={() => {props.account()}}>Settings</button>
+          </div>
           :
           null
         }
@@ -33,4 +37,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {logout})(Navbar)
+export default connect(mapStateToProps, {logout, account})(Navbar)

@@ -12,8 +12,11 @@ class Login extends React.Component {
       email: event.target.email.value,
       password: event.target.password.value
     }
-    this.props.login(user)
-    .then(()=>{this.props.history.push("/home")})
+    this.props.login(user).then(res => {
+      if (!this.props.error) {
+        this.props.history.push('/home')
+      }
+    })
   }
 
   render() {
@@ -34,9 +37,17 @@ class Login extends React.Component {
           <button onClick={() => {this.props.history.push("/signup")}}>Sign up</button>
         </div>
       </FlexyFlipCard>
+      {this.props.error ? this.props.error : null}
       </div>
     )
   }
 }
 
-export default connect(null, { login, signup })(Login)
+function mapStateToProps(state) {
+  return {
+    error: state.error
+  }
+}
+
+
+export default connect(mapStateToProps, { login, signup })(Login)

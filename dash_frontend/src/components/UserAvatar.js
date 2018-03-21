@@ -7,7 +7,6 @@ import { fetchEvent, createEvent, fetchEventfulAPI} from '../actions/events'
 const UserAvatar = (props) => {
 
   const topThreeEvents = () => {
-    console.log(props.user.events)
     let sortedEvents = props.user.events.sort(function(a, b) {
       a = new Date(a.start_time)
       b = new Date(b.start_time)
@@ -27,6 +26,7 @@ const UserAvatar = (props) => {
     const confirmedEvents = newestEvents.filter(event => {
       return event.invites[0].status === "confirmed"
     })
+
     if (confirmedEvents.length > 3) {
       const topThreeEvents = confirmedEvents.slice(0, 3)
       return topThreeEvents
@@ -53,7 +53,7 @@ const UserAvatar = (props) => {
       </div>
       <div id="upcomingEvents">
         <h3>Upcoming Events</h3>
-        <div>
+        <div className="eventItem">
           {events.map(event => {
             let start_time = event.start_time.toString()
             let start_date = moment(start_time).format("MMM, Do YYYY")

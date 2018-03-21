@@ -3,6 +3,7 @@ import moment from 'moment-timezone'
 import UserCreateEventForm from '../components/UserCreateEventForm'
 import UserEditEventForm from '../components/UserEditEventForm'
 import UserEventfulList from '../components/UserEventfulList'
+import UserUpdateForm from '../components/UserUpdateForm'
 import { editEvent, deleteEvent } from '../actions/events'
 import {updateStatus} from '../actions/users'
 import { connect } from 'react-redux'
@@ -97,30 +98,37 @@ const UserEventDetails = (props) => {
   }
 
   const whatToRender = (props) => {
-    if (props.createForm === true) {
+    if (props.isLoading) {
+      return (
+        <img src="loading.gif" alt="loading"/>
+      )
+    } else if (props.createForm) {
       return (
         <UserCreateEventForm />
       )
-    } else if (props.editForm === true) {
+    } else if (props.editForm) {
       return (
         <UserEditEventForm />
       )
-    } else if (props.eventful === true) {
+    } else if (props.eventful) {
       return (
         <UserEventfulList />
       )
+    } else if (props.updateAccount) {
+      return (
+        <UserUpdateForm />
+      )
     } else if (props.event.title === "") {
       return (
-        <div>
-          <h3>These are my event details, Lady</h3>
+        <div className="eventBox">
+          <h1>DASH</h1>
         </div>
       )
     } else {
-      console.log(props.event)
       return (
-        <div>
+        <div className="eventBox">
           <h1>{props.event.title}</h1>
-          <div id="eventDetails">
+          <div className="eventDetails">
             <div>
               <h4>Invited by: {findOwner(props)}</h4>
               <h4>Location: {props.event.location}</h4>
@@ -154,7 +162,9 @@ function mapStateToProps(state) {
     user: state.user,
     createForm: state.createForm,
     editForm: state.editForm,
-    eventful: state.eventfulSearch
+    eventful: state.eventfulSearch,
+    updateAccount: state.updateAccount,
+    isLoading: state.isLoading
   }
 }
 

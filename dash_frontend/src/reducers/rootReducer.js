@@ -3,9 +3,9 @@
 // import {combineReducers} from 'redux'
 
 import {CREATE_EVENT, ADDING_EVENT, ADDED_EVENT, EDIT_EVENT, EDITING_EVENT, EDITED_EVENT, FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS, FETCHING_EVENTFUL_EVENTS, FETCHED_EVENTFUL_EVENTS, DELETE_EVENT} from '../actions/events'
-import {FETCHING_USERS, FETCHED_USERS, FETCHING_USER, FETCHED_USER, ADDING_FRIEND, ADDED_FRIEND, CREATING_USER, CREATED_USER, LOGOUT, SIGNUP, NOSIGNUP, UPDATING_STATUS, UPDATED_STATUS} from '../actions/users'
+import {ACCOUNT, FETCHING_USERS, FETCHED_USERS, FETCHING_USER, FETCHED_USER, ADDING_FRIEND, ADDED_FRIEND, CREATING_USER, CREATED_USER, LOGOUT, SIGNUP, NOSIGNUP, UPDATING_STATUS, UPDATED_STATUS, UPDATING_USER, UPDATED_USER, DELETE_ACCOUNT} from '../actions/users'
 //
-const defaultState = {
+export const defaultState = {
   user: {name: '', email: '', photo: '', hometown: '', password_digest: '',
     friends: [{name: '', email: '', photo: '', hometown: '', password_digest: '', friend_category: []}],
     events: [{title: '', location: '', description: '', start_time: '', end_time: '',
@@ -29,7 +29,9 @@ const defaultState = {
   loggedIn: false,
   signup: false,
   eventfulEvents: [],
-  eventfulSearch: false
+  eventfulSearch: false,
+  updateAccount: false,
+  error: ''
 }
 
 function rootReducer (state = defaultState, action) {
@@ -37,12 +39,16 @@ function rootReducer (state = defaultState, action) {
     case FETCHING_USER:
         return {...state, isLoading: true};
     case FETCHED_USER:
-        if (localStorage.user_id) {
-          return {...state, user: action.payload, isLoading: false, loggedIn: true};
+        if (action.payload.message) {
+          return {...state, isLoading: false, error: action.payload.message}
         } else {
-          localStorage.setItem("user_id", action.payload.id)
-          return {...state, user: action.payload, isLoading: false, loggedIn: true};
-        };
+          if (localStorage.user_id) {
+            return {...state, user: action.payload, isLoading: false, loggedIn: true, error: ''};
+          } else {
+            localStorage.setItem("user_id", action.payload.id)
+            return {...state, user: action.payload, isLoading: false, loggedIn: true, error: ''};
+          };
+        }
     case FETCHING_USERS:
         return {...state, isLoading: true};
     case FETCHED_USERS:
@@ -52,6 +58,8 @@ function rootReducer (state = defaultState, action) {
           return {...state, signup: true};
     case NOSIGNUP:
           return {...state, signup: false};
+    case ACCOUNT:
+          return {...state, updateAccount: true};
     case CREATING_USER:
         return {...state, isLoading: true};
     case CREATED_USER:
@@ -120,12 +128,15 @@ function rootReducer (state = defaultState, action) {
           ]
         }
       }
+    case UPDATING_USER:
+        return {...state, isLoading: true};
+    case UPDATED_USER:
+        return {...state, user: action.payload, updateAccount: false}
     case CREATE_EVENT:
         return {...state, createForm: true};
     case ADDING_EVENT:
         return {...state, isLoading: true, createForm: false};
     case ADDED_EVENT:
-        console.log(action.payload)
         return {...state,
           user: {
             ...state.user,
@@ -256,7 +267,10 @@ function rootReducer (state = defaultState, action) {
         createForm: false,
         editForm: false,
         loggedIn: false
-      }
+      };
+    case DELETE_ACCOUNT:
+        localStorage.clear()
+        return defaultState
     default:
       return state
   }
