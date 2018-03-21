@@ -77,7 +77,7 @@ export function noSignup() {
 export function updateStatus(event, status) {
   return function(dispatch) {
     dispatch({ type: UPDATING_STATUS})
-    UserApi.updateStatus(event[0].id, status).then(invite => {
+    UserApi.updateStatus(event, status).then(invite => {
       dispatch({
         type: UPDATED_STATUS,
         payload: invite

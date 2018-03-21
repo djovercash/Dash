@@ -42,15 +42,20 @@ class userApi {
     }).then(res => res.json())
   }
 
-  static updateStatus(id, status) {
-    return fetch(`${INVITEURL}/${id}`, {
-      method: "PATCH",
+  static updateStatus(event, status) {
+    return fetch(`${INVITEURL}/${event[0].id}`, {
+      method: "PUT",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        status: status
+        admin: event[0].admin,
+        event_id: event[0].event_id,
+        host: event[0].host,
+        id: event[0].id,
+        status: status,
+        user_id: event[0].id
       })
     }).then(res => res.json())
   }
