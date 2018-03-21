@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {logout, account} from '../actions/users'
+import {logout, account, home} from '../actions/users'
 
 const Navbar = (props) => {
   const firstName = props.user.name.split(" ")
@@ -16,7 +16,8 @@ const Navbar = (props) => {
         <h3>DASH</h3>
       </div>
       <div className="navbarItem">
-        <h5>Welcome back, {firstName[0]} | {props.loggedIn ?
+        <h5 onClick={() => {props.home()}}>Welcome back, {firstName[0]}</h5>
+        {props.loggedIn ?
           <div>
             <button onClick={logout}>Logout</button>
             <button onClick={() => {props.account()}}>Settings</button>
@@ -24,7 +25,6 @@ const Navbar = (props) => {
           :
           null
         }
-        </h5>
       </div>
     </div>
   )
@@ -37,4 +37,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, {logout, account})(Navbar)
+export default connect(mapStateToProps, {logout, account, home})(Navbar)

@@ -3,7 +3,7 @@
 // import {combineReducers} from 'redux'
 
 import {CREATE_EVENT, ADDING_EVENT, ADDED_EVENT, EDIT_EVENT, EDITING_EVENT, EDITED_EVENT, FETCHING_EVENT, FETCHED_EVENT, FETCHING_EVENTS, FETCHED_EVENTS, FETCHING_EVENTFUL_EVENTS, FETCHED_EVENTFUL_EVENTS, DELETE_EVENT} from '../actions/events'
-import {ACCOUNT, FETCHING_USERS, FETCHED_USERS, FETCHING_USER, FETCHED_USER, ADDING_FRIEND, ADDED_FRIEND, CREATING_USER, CREATED_USER, LOGOUT, SIGNUP, NOSIGNUP, UPDATING_STATUS, UPDATED_STATUS, UPDATING_USER, UPDATED_USER, DELETE_ACCOUNT} from '../actions/users'
+import {HOME, ACCOUNT, FETCHING_USERS, FETCHED_USERS, FETCHING_USER, FETCHED_USER, ADDING_FRIEND, ADDED_FRIEND, CREATING_USER, CREATED_USER, LOGOUT, SIGNUP, NOSIGNUP, UPDATING_STATUS, UPDATED_STATUS, UPDATING_USER, UPDATED_USER, DELETE_ACCOUNT} from '../actions/users'
 //
 export const defaultState = {
   user: {name: '', email: '', photo: '', hometown: '', password_digest: '',
@@ -31,7 +31,8 @@ export const defaultState = {
   eventfulEvents: [],
   eventfulSearch: false,
   updateAccount: false,
-  error: ''
+  error: '',
+  findFriends: false
 }
 
 function rootReducer (state = defaultState, action) {
@@ -53,13 +54,27 @@ function rootReducer (state = defaultState, action) {
         return {...state, isLoading: true};
     case FETCHED_USERS:
         const otherUsers = action.payload.filter(user => user.id !== state.user.id)
-        return {...state, users: otherUsers}
+        return {...state, users: otherUsers, isLoading: false, findFriends: true}
     case SIGNUP:
           return {...state, signup: true};
     case NOSIGNUP:
           return {...state, signup: false};
     case ACCOUNT:
           return {...state, updateAccount: true};
+    case HOME:
+          return {...state,
+            findFriends: false,
+            isLoading: false,
+            createForm: false,
+            editForm: false,
+            eventfulSearch: false,
+            updateAccount: false,
+            specific_event: {title: '', location: '', description: '', start_time: '', end_time: '',
+              users: [{name: '', email: '', photo: '', hometown: '', password_digest: '',
+                invites: [{user_id: null, event_id: null, admin: null, status: '', host: null }]
+              }]
+            }
+          }
     case CREATING_USER:
         return {...state, isLoading: true};
     case CREATED_USER:
@@ -79,7 +94,8 @@ function rootReducer (state = defaultState, action) {
               friend_category: []
             }
           ]
-        }
+        },
+        isLoading: false
       }
     case UPDATING_STATUS:
       return {...state, isLoading: true};
@@ -131,7 +147,7 @@ function rootReducer (state = defaultState, action) {
     case UPDATING_USER:
         return {...state, isLoading: true};
     case UPDATED_USER:
-        return {...state, user: action.payload, updateAccount: false}
+        return {...state, user: action.payload, updateAccount: false, isLoading: false}
     case CREATE_EVENT:
         return {...state, createForm: true};
     case ADDING_EVENT:

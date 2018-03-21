@@ -1,7 +1,8 @@
 import React from 'react'
 import moment from 'moment-timezone'
 import { connect } from 'react-redux'
-import { fetchEvent, createEvent, fetchEventfulAPI} from '../actions/events'
+import { fetchEvent, createEvent, fetchEventfulAPI } from '../actions/events'
+import { fetchUsers } from '../actions/users'
 
 
 const UserAvatar = (props) => {
@@ -50,6 +51,7 @@ const UserAvatar = (props) => {
       <div>
         <button onClick={createEvent}>Create Event</button>
         <button onClick={() => props.fetchEventfulAPI(props.user.hometown)}>Find Event</button>
+        <button onClick={props.fetchUsers}>Friends</button>
       </div>
       <div id="upcomingEvents">
         <h3>Upcoming Events</h3>
@@ -72,4 +74,4 @@ function mapStateToProps(state) {
 }
 
 
-export default connect(mapStateToProps, { fetchEvent, createEvent, fetchEventfulAPI })(UserAvatar)
+export default connect(mapStateToProps, { fetchEvent, createEvent, fetchEventfulAPI, fetchUsers })(UserAvatar)

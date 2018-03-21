@@ -1,8 +1,8 @@
 import React from 'react'
-import { fetchEvent, fetchEvents } from '../actions/events'
+import {fetchEvent, fetchEvents} from '../actions/events'
 import {connect} from 'react-redux'
 
-class UserEventsList extends React.Component {
+class UserDashboard extends React.Component{
 
   componentDidMount() {
     this.props.fetchEvents
@@ -22,7 +22,7 @@ class UserEventsList extends React.Component {
     this.props.fetchEvent(id)
   }
 
-  render() {
+  render(){
     const userCreatedEvents = this.props.user.events.filter(event => event.invites[0].admin === true)
     const currentDate = new Date()
     const userNewCreatedEvents = []
@@ -66,9 +66,9 @@ class UserEventsList extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    user: state.user,
-    events: state.events
+    events: state.events,
+    user: state.user
   }
 }
 
-export default connect(mapStateToProps, { fetchEvent, fetchEvents })(UserEventsList)
+export default connect(mapStateToProps, { fetchEvent, fetchEvents })(UserDashboard)

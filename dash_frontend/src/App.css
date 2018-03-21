@@ -24,8 +24,9 @@
   align-items: center;
 }
 
+
 .navbarItem h5{
-  width: 240px;
+  margin-right: 10px;
 }
 
 #footer {
@@ -73,6 +74,17 @@
 #userDetailContainer {
   background-color: rgba(0, 0, 0, 0.5);
   width: 70%;
+}
+
+.friendDashboardList {
+  display: flex;
+  align-items: center;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.friendDashboardStatus h5 {
+  margin: 0px;
 }
 
 #login {

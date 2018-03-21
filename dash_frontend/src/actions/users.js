@@ -6,6 +6,7 @@ export const FETCHING_USER = "FETCHING_USER"
 export const FETCHED_USER = "FETCHED_USER"
 export const SIGNUP = "SIGNUP"
 export const NOSIGNUP = "NO_SIGNUP"
+export const FIND_FRIENDS = "FIND_FRIENDS"
 export const ADDING_FRIEND = "ADDING_FRIEND"
 export const ADDED_FRIEND = "ADDED_FRIEND"
 export const CREATING_USER = "CREATING_USER"
@@ -17,6 +18,7 @@ export const UPDATED_USER = "UPDATED_USER"
 export const LOGOUT = "LOGOUT"
 export const ACCOUNT = "ACCOUNT"
 export const DELETE_ACCOUNT = "DELETE_ACCOUNT"
+export const HOME = "HOME"
 
 export function login(user) {
   return function(dispatch) {
@@ -117,6 +119,12 @@ export function addFriend(friendship) {
 export function account() {
   return {
     type: ACCOUNT
+  }
+}
+
+export function home() {
+  return {
+    type: HOME
   }
 }
 
