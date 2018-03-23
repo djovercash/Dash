@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :name, :email, :photo, :hometown, :friends, :events
+  attributes :id, :name, :email, :photo, :hometown, :friends, :events, :friend_categories
 
   def friends
     friend_category = []
@@ -14,6 +14,12 @@ class UserSerializer < ActiveModel::Serializer
       end
     end
     return friend_category
+  end
+
+  def friend_categories
+    friend_categories = []
+    friend_categories.push(object.friend_categories.uniq {|category| category.name})
+    return friend_categories[0]
   end
 
   def events

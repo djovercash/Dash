@@ -2,6 +2,8 @@ const USERURL = 'http://localhost:3000/users'
 const LOGINURL = 'http://localhost:3000/login'
 const INVITEURL = 'http://localhost:3000/invites'
 const FRIENDSHIPURL = 'http://localhost:3000/friendships'
+const FRIENDCATEGORYURL = 'http://localhost:3000/friend_categories'
+const FRIENDLISTURL = 'http://localhost:3000/friendlists'
 
 class userApi {
   static login(email, password) {
@@ -90,6 +92,34 @@ class userApi {
         friend_id: friend_id
       })
     }).then(res => res.json())
+  }
+
+  static createCategory(name, id) {
+    return fetch(FRIENDCATEGORYURL, {
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: name,
+        user_id: id
+      })
+    }).then(res => res.json())
+  }
+
+  static updateFriendCategory(user, friend, create_ids, destroy_ids) {
+      return fetch(FRIENDLISTURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user: user.id,
+          friend: friend.id,
+          create_ids: create_ids,
+          destroy_ids: destroy_ids
+        })
+      }).then(res => res.json())
   }
 
   static deleteAccount(id) {

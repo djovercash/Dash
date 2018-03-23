@@ -7,6 +7,10 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
 
+FriendCategory.create(name: "All")
+
 100.times do |i|
-  User.create(name: Faker::Name.name, email: "andrewjovercash@gmail.com", photo: "http://www.you-can-be-funny.com/images/grandamainpurple.jpg", hometown: "New York", password: '123', password_confirmation: '123')
+  user = User.create(name: Faker::Name.name, email: "andrewjovercash@gmail.com", photo: "http://www.you-can-be-funny.com/images/grandamainpurple.jpg", hometown: "New York", password: '123', password_confirmation: '123')
+  friendship = Friendship.create(user_id: user.id, friend_id: user.id)
+  Friendlist.create(friendship_id: friendship.id, friend_category_id: 1)
 end

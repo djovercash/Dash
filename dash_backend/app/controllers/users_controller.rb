@@ -14,6 +14,8 @@ class UsersController < ApplicationController
   @user = User.new(user_params)
     if @user.valid?
       @user.save
+      @friendship = Friendship.create(user_id: @user.id, friend_id: @user.id)
+      Friendlist.create(friendship_id: @friendship.id, friend_category_id: 1)
       render json:@user
     else
       render json:{message: "Invalid Information. Please try again"}, status: 401

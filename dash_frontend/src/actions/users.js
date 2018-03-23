@@ -8,9 +8,13 @@ export const SIGNUP = "SIGNUP"
 export const NOSIGNUP = "NO_SIGNUP"
 export const FIND_FRIENDS = "FIND_FRIENDS"
 export const ADDING_FRIEND = "ADDING_FRIEND"
+export const CREATING_CATEGORY = "CREATING_CATEGORY"
+export const CREATED_CATEGORY = "CREATED_CATEGORY"
 export const ADDED_FRIEND = "ADDED_FRIEND"
 export const CREATING_USER = "CREATING_USER"
 export const CREATED_USER = "CREATED_USER"
+export const UPDATING_FRIEND_CATEGORY = "UPDATING_FRIEND_CATEGORY"
+export const UPDATED_FRIEND_CATEGORY = "UPDATED_FRIEND_CATEGORY"
 export const UPDATING_STATUS = "UPDATING_STATUS"
 export const UPDATED_STATUS = "UPDATED_STATUS"
 export const UPDATING_USER = "UPDATING_USER"
@@ -111,6 +115,30 @@ export function addFriend(friendship) {
       dispatch({
         type: ADDED_FRIEND,
         payload: newFriend
+      })
+    })
+  }
+}
+
+export function createCategory(name, id) {
+  return function(dispatch) {
+    dispatch({ type: CREATING_CATEGORY})
+    UserApi.createCategory(name, id).then(newCategory => {
+      dispatch({
+        type: CREATED_CATEGORY,
+        payload: newCategory
+      })
+    })
+  }
+}
+
+export function updateFriendCategory(user, friend, create_ids, destroy_ids){
+  return function(dispatch) {
+    dispatch({ type: UPDATING_FRIEND_CATEGORY})
+    UserApi.updateFriendCategory(user, friend, create_ids, destroy_ids).then(updatedUser => {
+      dispatch({
+        type: UPDATED_FRIEND_CATEGORY,
+        payload: updatedUser
       })
     })
   }
