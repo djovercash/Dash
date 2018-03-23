@@ -14,7 +14,15 @@ class UserCreateEventForm extends React.Component {
     end_time: '',
     friendFilter: '',
     friends: [...this.props.user.friends],
-    invitedFriends: []
+    invitedFriends: [],
+    userCategories: [],
+    createCategory: []
+  }
+
+  componentDidMount() {
+    this.setState({
+      userCategories: this.props.user.friend_categories.filter(category => category.name !== "All")
+    })
   }
 
   handleOnChange = (e) => {
@@ -29,6 +37,15 @@ class UserCreateEventForm extends React.Component {
     const startTimeElements = this.state.start_time.split(":")
     const endDateElements = this.state.end_date.split("-")
     const endTimeElements = this.state.end_time.split(":")
+    this.state.friends.filter(friend => {
+      for (const category of friend.friend_category) {
+        if (this.state.createCategory.includes(category.id)) {
+          this.state.invitedFriends.push(friend)
+        }
+      }
+    })
+    const userFriends = this.state.invitedFriends.filter(friend => friend.id !== this.props.user.id)
+    const finalInvites = userFriends.map(friend => friend.id).filter((value, index, self) => self.indexOf(value) === index)
     const action = {
       title: this.state.title,
       location: this.state.location,
@@ -36,7 +53,7 @@ class UserCreateEventForm extends React.Component {
       start_time: new Date(startDateElements[0], startDateElements[1] - 1, startDateElements[2], startTimeElements[0], startTimeElements[1]),
       end_time: new Date(endDateElements[0], endDateElements[1] - 1, endDateElements[2], endTimeElements[0], endTimeElements[1]),
       user_id: this.props.user.id,
-      friends: this.state.invitedFriends
+      friends: finalInvites
     }
     this.props.addEvent(action)
   }
@@ -59,6 +76,49 @@ class UserCreateEventForm extends React.Component {
     }
   }
 
+  handleOnClickAdd = (e) => {
+    const categoryId = parseInt(e.target.value)
+    this.setState({
+      createCategory: [...this.state.createCategory, categoryId]
+    })
+  }
+
+  handleOnClickRemove = (e) => {
+    const categoryId = parseInt(e.target.value)
+    const remainingCategoryIds = this.state.createCategory.filter(id => id !== categoryId)
+    this.setState({
+      createCategory: [...remainingCategoryIds]
+    })
+  }
+
+  renderUserCategories() {
+    console.log(this.state.friends)
+    const userSelectedCategories = this.state.userCategories.filter(category => !this.state.createCategory.includes(category.id))
+    const selectedUserCategories = this.state.userCategories.filter(category => this.state.createCategory.includes(category.id))
+    console.log(userSelectedCategories)
+    return (
+      <div>
+        <h3>Here are the categories</h3>
+        <div>
+          <h4>All Categories</h4>
+          <select multiple="multiple" onClick={this.handleOnClickAdd}>
+            {userSelectedCategories.map(category => {
+              return <option key={category.id} value={category.id}>{category.name}</option>
+            })}
+          </select>
+        </div>
+        <div>
+          <h4>Selected Categories</h4>
+          <select multiple="multiple" onClick={this.handleOnClickRemove}>
+            {selectedUserCategories.map(category => {
+              return <option key={category.id} value={category.id}>{category.name}</option>
+            })}
+          </select>
+        </div>
+      </div>
+    )
+  }
+
   handleInvite = (friend) => {
     this.setState({
       invitedFriends: [...this.state.invitedFriends, friend]
@@ -66,6 +126,7 @@ class UserCreateEventForm extends React.Component {
   }
 
   render() {
+    console.log(this.props.user)
     return (
       <div>
         <form onSubmit={this.handleOnSubmit}>
@@ -90,6 +151,10 @@ class UserCreateEventForm extends React.Component {
         <input type="text" name="friendFilter" onChange={this.handleOnChange} />
         <div>
           {this.renderFriendsForEventInvites()}
+        </div>
+        <div>
+          <h3>Invite A Group</h3>
+          {this.renderUserCategories()}
         </div>
       </div>
     )

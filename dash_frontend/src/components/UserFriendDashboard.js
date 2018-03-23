@@ -21,7 +21,6 @@ class UserFriendDashboard extends React.Component{
   }
 
   handleUpdate = (e) => {
-    console.log("HERE")
     this.props.updateFriendCategory(this.props.user, this.state.selectedFriend, this.state.createCategory, this.state.destroyCategory)
   }
 

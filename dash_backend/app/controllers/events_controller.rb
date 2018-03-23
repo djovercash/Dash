@@ -18,7 +18,7 @@ class EventsController < ApplicationController
       @user = User.find_by(id: params[:user_id])
       @friends = params[:friends]
       @friends.each do |friend|
-        Invite.create(user_id: friend["id"], event_id: @event.id)
+        Invite.create(user_id: friend, event_id: @event.id)
       end
       @friends.each do |friend|
         Emailer.sendEmail(@user.name).deliver!
