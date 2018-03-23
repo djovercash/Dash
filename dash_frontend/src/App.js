@@ -6,6 +6,7 @@ import Footer from './containers/Footer'
 import Login from './components/UserLogin'
 import Signup from './components/UserSignup'
 import { fetchUser } from './actions/users'
+import { fetchEvents } from './actions/events'
 import {connect} from 'react-redux'
 import './App.css';
 
@@ -50,4 +51,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, {fetchUser})(App));
+export default withRouter(connect(mapStateToProps, {fetchUser, fetchEvents})(App));

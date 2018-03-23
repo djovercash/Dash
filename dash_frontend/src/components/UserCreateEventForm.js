@@ -92,10 +92,8 @@ class UserCreateEventForm extends React.Component {
   }
 
   renderUserCategories() {
-    console.log(this.state.friends)
     const userSelectedCategories = this.state.userCategories.filter(category => !this.state.createCategory.includes(category.id))
     const selectedUserCategories = this.state.userCategories.filter(category => this.state.createCategory.includes(category.id))
-    console.log(userSelectedCategories)
     return (
       <div>
         <h3>Here are the categories</h3>
@@ -126,7 +124,6 @@ class UserCreateEventForm extends React.Component {
   }
 
   render() {
-    console.log(this.props.user)
     return (
       <div>
         <form onSubmit={this.handleOnSubmit}>

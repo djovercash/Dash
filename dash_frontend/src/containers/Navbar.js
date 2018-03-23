@@ -13,18 +13,12 @@ const Navbar = (props) => {
   return (
     <div id="navbar">
       <div className="navbarItem">
-        <h3>DASH</h3>
+        <h3 onClick={() => props.home()}>DASH</h3>
       </div>
       <div className="navbarItem">
         <h5 onClick={() => {props.home()}}>Welcome back, {firstName[0]}</h5>
-        {props.loggedIn ?
-          <div>
-            <button onClick={logout}>Logout</button>
-            <button onClick={() => {props.account()}}>Settings</button>
-          </div>
-          :
-          null
-        }
+        <img onClick={() => {props.account()}} src="three_dots.png" alt="dropdown options" height="20px"/>
+        <button onClick={logout}>Logout</button>
       </div>
     </div>
   )

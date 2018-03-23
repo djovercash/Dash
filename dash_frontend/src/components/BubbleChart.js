@@ -9,7 +9,6 @@ class BubbleWeb extends React.Component {
     const categoryObjArray = categories.map(category => {
       return {label: category}
     })
-    const categoryObjWOAll = categoryObjArray.filter(category => category.label !== "All")
     const friendsAndCategories = this.props.user.friends.filter(friend => friend.name !== this.props.user.name)
     const friendCategories = []
     const categoryCounts = {}

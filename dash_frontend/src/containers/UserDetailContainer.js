@@ -9,9 +9,15 @@ import UserDashboard from '../components/UserDashboard'
 import UserFriendDashboard from '../components/UserFriendDashboard'
 import UserUpdateForm from '../components/UserUpdateForm'
 import UserEventsList from '../components/UserEventsList'
+import {fetchEvents} from '../actions/events'
 
-const UserDetailContainer = (props) => {
-  const whatToRender = (props) => {
+class UserDetailContainer extends React.Component{
+
+  componentDidMount() {
+    this.props.fetchEvents()
+  }
+
+  whatToRender = (props) => {
     if (props.isLoading) {
       return (
         <img src="loading.gif" alt="loading"/>
@@ -47,18 +53,18 @@ const UserDetailContainer = (props) => {
     }
   }
 
-  return (
-    <div id="userDetailContainer">
-      {whatToRender(props)}
-    </div>
-  )
+  render() {
+    return (
+      <div id="userDetailContainer">
+        {this.whatToRender(this.props)}
+      </div>
+    )
+  }
 }
 
 function mapStateToProps(state) {
   return {
-    event: state.specific_event,
-    events: state.events,
-    user: state.user,
+    event: state.specific_event, 
     createForm: state.createForm,
     editForm: state.editForm,
     eventful: state.eventfulSearch,
@@ -68,4 +74,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(UserDetailContainer)
+export default connect(mapStateToProps, {fetchEvents})(UserDetailContainer)
