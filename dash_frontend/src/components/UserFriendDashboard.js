@@ -116,6 +116,7 @@ class UserFriendDashboard extends React.Component{
       const userSelectedCategories = this.state.userCategories.filter(category => !this.state.createCategory.includes(category.id))
       return (
         <div>
+          <h1>Friend Bubble</h1>
           <div id="selectedFriend">
             <div id="selectedFriendImage">
               <img src={this.state.selectedFriend.photo} alt={this.state.selectedFriend.name} />
@@ -149,6 +150,7 @@ class UserFriendDashboard extends React.Component{
     } else {
       return (
         <div id="preSelectedFriend">
+          <h1>Friend Bubble</h1>
           <h3>Welcome to your Friend Dashboard</h3>
           <h4>Find Friends. Create Bubbles. Build Your Network</h4>
         </div>
@@ -222,7 +224,6 @@ class UserFriendDashboard extends React.Component{
             <BubbleChart />
           </div>
           <div id="selectedFriendContainer">
-            <h1>Friend Bubble</h1>
             {this.selectedFriend()}
           </div>
         </div>
@@ -244,7 +245,11 @@ class UserFriendDashboard extends React.Component{
           <div>
             <h3>Create a Bubble</h3>
             <input type="text" name="createdCategory" onChange={this.handleOnChange} /><br />
-            <input type="submit" value="Submit" onClick={this.createCategory}/>
+            {this.state.createdCategory !== '' ?
+              <button onClick={this.createCategory}>Submit</button>
+              :
+              null
+            }
           </div>
           <div>
             <h3>Other users near {this.props.user.hometown}</h3>

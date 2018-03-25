@@ -248,6 +248,10 @@ button:hover {
   width: 50%;
 }
 
+#text {
+  vertical-align: middle;
+}
+
 #selectedFriend {
   display: flex;
   justify-content: center;
@@ -267,6 +271,10 @@ button:hover {
 #selectedFriendDetails {
   color: rgb(64, 224, 208);
   margin-left: 2%;
+}
+
+#preSelectedFriend {
+  margin-top: 10%;
 }
 
 #preSelectedFriend h3 {
