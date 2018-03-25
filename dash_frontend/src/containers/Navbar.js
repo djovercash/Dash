@@ -13,7 +13,7 @@ const Navbar = (props) => {
   return (
     <div id="navbar">
       <div className="navbarItem">
-        <h3 onClick={() => props.home()}>DASH</h3>
+        <h2 onClick={() => props.home()}>DASH</h2>
       </div>
       <div className="navbarItem">
         <h5 onClick={() => {props.home()}}>Welcome back, {firstName[0]}</h5>

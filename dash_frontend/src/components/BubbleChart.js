@@ -41,11 +41,11 @@ class BubbleWeb extends React.Component {
         <div>
           <BubbleChart
           graph={{
-            zoom: 0.5,
-            offsetX: 0,
+            zoom: 0.75,
+            offsetX: 0.15,
             offsetY: 0,
           }}
-            width={500}
+            width={400}
             height={300}
             showLegend={false}
             valueFont={{

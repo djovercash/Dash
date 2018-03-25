@@ -55,11 +55,13 @@ const UserAvatar = (props) => {
       </div>
       <div id="upcomingEvents">
         <h3>Upcoming Events</h3>
-        <div className="eventItem">
+        <div className="eventList">
+        <ul className="list">
           {events.map(event => {
             let start_time = event.start_time.toString()
             let start_date = moment(start_time).format("MMM, Do YYYY")
-            return <h5 key={event.id} onClick={() => {findEvent(event.id)}}>{event.title.length > 10 ? event.title.substring(0, 10) : event.title} | {start_date}</h5>})}
+            return <li key={event.id} onClick={() => {findEvent(event.id)}}>{event.title.length > 10 ? event.title.substring(0, 10) : event.title} | {start_date}</li>})}
+        </ul>
         </div>
       </div>
     </div>

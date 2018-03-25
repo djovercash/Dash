@@ -81,14 +81,13 @@ class UserFriendDashboard extends React.Component{
     })
     return (
         <div id="userFriendList">
-          <select name="categorySelection" onChange={this.handleOnChange}>
-            {userCategories.map(category => {
-              return <option key={category.id} value={category.name}>{category.name}</option>
+          <div className="eventList">
+            <ul className="list">
+            {userFriendsCategories.map(friend => {
+              return <li onClick={() => {this.selectFriend(friend)}} key={friend.id}>{friend.name}</li>
             })}
-          </select>
-          {userFriendsCategories.map(friend => {
-            return <h5 onClick={() => {this.selectFriend(friend)}} key={friend.id}>{friend.name}</h5>
-          })}
+            </ul>
+          </div>
         </div>
     )
   }
@@ -117,28 +116,41 @@ class UserFriendDashboard extends React.Component{
       const userSelectedCategories = this.state.userCategories.filter(category => !this.state.createCategory.includes(category.id))
       return (
         <div>
-          <div>
-            <h3>{this.state.selectedFriend.name}</h3>
-            <img src={this.state.selectedFriend.photo} alt={this.state.selectedFriend.name} width="100px" height="100px"/>
-            <h4>Add or Remove a Category: </h4>
-            <select multiple="multiple" name="createCategory" onClick={this.handleOnClickAdd}>
-              {userSelectedCategories.map(category => {
-                return <option key={category.id} value={category.id}>{category.name}</option>
-              })}
-            </select>
-            <select multiple="multiple" name="createCategory" onClick={this.handleOnClickRemove}>
-              {selectedFriendCategories.map(category => {
-                return <option key={category.id} value={category.id}>{category.name}</option>
-              })}
-            </select>
+          <div id="selectedFriend">
+            <div id="selectedFriendImage">
+              <img src={this.state.selectedFriend.photo} alt={this.state.selectedFriend.name} />
+            </div>
+            <div id="selectedFriendDetails">
+              <h4>{this.state.selectedFriend.name}</h4>
+              <h5>{this.state.selectedFriend.hometown}</h5>
+            </div>
+          </div>
+          <div id="selectedFriendCategory">
+            <div className="categorySelect">
+            <h4>All Bubbles</h4>
+              <select className="categorySelect" multiple="multiple" name="createCategory" onClick={this.handleOnClickAdd}>
+                {userSelectedCategories.map(category => {
+                  return <option key={category.id} value={category.id}>{category.name}</option>
+                })}
+              </select>
+            </div>
+            <div className="categorySelect">
+              <h4>Included Bubbles</h4>
+              <select className="categorySelect" multiple="multiple" name="createCategory" onClick={this.handleOnClickRemove}>
+                {selectedFriendCategories.map(category => {
+                  return <option key={category.id} value={category.id}>{category.name}</option>
+                })}
+              </select>
+            </div>
           </div>
           <button onClick={this.handleUpdate}>Update Friend</button>
         </div>
       )
     } else {
       return (
-        <div>
-          <h3>Welcome to your FriendDashboard</h3>
+        <div id="preSelectedFriend">
+          <h3>Welcome to your Friend Dashboard</h3>
+          <h4>Find Friends. Create Bubbles. Build Your Network</h4>
         </div>
       )
     }
@@ -150,23 +162,25 @@ class UserFriendDashboard extends React.Component{
       const filteredFriend = filteredFriends[0]
       const friendsAlready = this.props.user.friends.find(friend => friend.id === filteredFriend.id)
       return (
-        <div className="friendFinder">
-          <h3>Find New Friends</h3>
-          <input type="text" name="friendFinder" onChange={this.handleOnChange} />
-            <h5><img src={filteredFriends[0].photo} width="50px" height="50px" alt={filteredFriends[0].name}/>{filteredFriends[0].name}</h5>
-            {!friendsAlready ?
-              <button onClick={() => {this.handleFriendship(filteredFriends[0])}}>Add Friend</button>
-              :
-              <h5>Already Friends</h5>
-            }
+        <div className="otherUsers">
+          <div className="friendDashboardList">
+            <div className="friendDashboardListImg" >
+              <img src={filteredFriends[0].photo} width="50px" height="50px" alt={filteredFriends[0].name}/>
+            </div>
+            <div className="friendDashboardStatus">
+              <h5>{filteredFriends[0].name}</h5>
+              {!friendsAlready ?
+                <button onClick={() => {this.handleFriendship(filteredFriends[0])}}>Add Friend</button>
+                :
+                <h5>Already Friends</h5>
+              }
+            </div>
+          </div>
         </div>
       )
     } else {
       return (
-        <div className="friendFinder">
-          <h3>Find New Friends</h3>
-          <input type="text" name="friendFinder" onChange={this.handleOnChange} />
-        </div>
+        null
       )
     }
   }
@@ -191,7 +205,6 @@ class UserFriendDashboard extends React.Component{
         newNearbyUsers.push(user)
       }
     }
-
     if (newNearbyUsers.length > 3) {
       const topThreeUsers = newNearbyUsers.slice(0, 3)
       return topThreeUsers
@@ -201,47 +214,59 @@ class UserFriendDashboard extends React.Component{
   }
 
   render() {
+    const userCategories = this.props.user.friend_categories
     return (
       <div id="friendDashboard">
-        <div id="userFriendsDashboard">
-          <div>
+        <div id="userFriendsTop">
+          <div id="bubbleChart">
             <BubbleChart />
           </div>
+          <div id="selectedFriendContainer">
+            <h1>Friend Bubble</h1>
+            {this.selectedFriend()}
+          </div>
+        </div>
+        <div id="userFriendsBottom">
           <div>
             <h3>Your Friends</h3>
+            <select name="categorySelection" onChange={this.handleOnChange}>
+              {userCategories.map(category => {
+                return <option key={category.id} value={category.name}>{category.name}</option>
+              })}
+            </select>
             {this.userFriends(this.props.user)}
           </div>
           <div>
-            <h3>Create a Category</h3>
+            <h3>Find New Friends</h3>
+            <input type="text" name="friendFinder" onChange={this.handleOnChange} />
+            {this.findFriends()}
+          </div>
+          <div>
+            <h3>Create a Bubble</h3>
             <input type="text" name="createdCategory" onChange={this.handleOnChange} /><br />
             <input type="submit" value="Submit" onClick={this.createCategory}/>
           </div>
           <div>
-            <h3>Friend Category/Stats</h3>
-            {this.selectedFriend()}
-          </div>
-        </div>
-        <div id="nonUserFriends">
-          <div>
             <h3>Other users near {this.props.user.hometown}</h3>
-            {this.newestUsers(this.props.users).map(user => {
-              return (
-                <div key={user.name} className="friendDashboardList">
-                  <img src={user.photo} width="50px" height="50px" alt={user.name}/>
-                  <div className="friendDashboardStatus">
-                    <h5>{user.name}</h5>
-                    {!this.props.user.friends.find(friend => friend.id === user.id) ?
-                      <button onClick={() => {this.handleFriendship(user)}}>Add Friend</button>
-                      :
-                      <h5>Already Friends</h5>
-                    }
+              <div className="otherUsers">
+              {this.newestUsers(this.props.users).map(user => {
+                return (
+                  <div key={user.name} className="friendDashboardList">
+                    <div className="friendDashboardListImg" >
+                      <img src={user.photo} width="50px" height="50px" alt={user.name}/>
+                    </div>
+                    <div className="friendDashboardStatus">
+                      <h5>{user.name}</h5>
+                      {!this.props.user.friends.find(friend => friend.id === user.id) ?
+                        <button onClick={() => {this.handleFriendship(user)}}>Add Friend</button>
+                        :
+                        <h5>Already Friends</h5>
+                      }
+                    </div>
                   </div>
-                </div>
-              )
-            })}
-          </div>
-          <div>
-          {this.findFriends()}
+                )
+              })}
+              </div>
           </div>
         </div>
       </div>

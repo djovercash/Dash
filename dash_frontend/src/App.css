@@ -9,6 +9,19 @@
   height: 100%;
 }
 
+button {
+  color: rgb(77, 77, 77);
+  background-color: rgb(64, 224, 208);
+  font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+  border: 0px;
+  outline: 0px;
+}
+
+button:hover {
+  color: rgb(64, 224, 208);
+  background-color: rgb(77, 77, 77);
+}
+
 #navbar {
   display: flex;
   justify-content: space-between;
@@ -100,7 +113,9 @@
 }
 
 #upcomingEvents {
-  width: 100%;
+  display: inline-block;
+  justify-content: center;
+  width: 80%;
   height: 100%;
 }
 
@@ -119,15 +134,41 @@
   width: 70%;
 }
 
+.otherUsers {
+  display: inline-block;
+  justify-content: center;
+  width: 75%;
+  background-color: rgb(217, 217, 217);
+  border: 2px solid rgb(77, 77, 77);
+}
+
+#otherUsersTwo {
+  display: inline-block;
+  justify-content: center;
+  width: 75%;
+  background-color: rgb(217, 217, 217);
+  border: 2px solid rgb(77, 77, 77);
+}
+
 .friendDashboardList {
   display: flex;
+  width: 100%;
   align-items: center;
-  margin-top: 1%;
-  margin-bottom: 1%;
+  margin: 2% 2% 2% 2%;
+}
+
+.friendDashboardListImg {
+  margin-right: 5%;
+}
+
+.friendDashboardStatus {
+  display: inline;
+  text-align: center;
 }
 
 .friendDashboardStatus h5 {
   margin: 0px;
+  padding-bottom: 0px;
 }
 
 #login {
@@ -180,14 +221,76 @@
 }
 
 #friendDashboard {
-
+  height: 600px;
+  width: 100%;
+  text-align: center;
 }
 
-#userFriendsDashboard {
-  display: flex;
-  justify-content: space-around;
-  height: 300px;
+#friendDashboard h3 {
+  margin-bottom: 0px;
+  padding-bottom: 0px
+}
 
+#userFriendsTop {
+  display: flex;
+  justify-content: center;
+  height: 300px;
+  width: 100%;
+  color: rgb(64, 224, 208);
+  vertical-align: middle;
+}
+
+#bubbleChart {
+  width: 50%;
+}
+
+#selectedFriendContainer {
+  width: 50%;
+}
+
+#selectedFriend {
+  display: flex;
+  justify-content: center;
+}
+
+#selectedFriendImage{
+  width: 100px;
+  height: 100px;
+}
+
+#selectedFriendImage > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#selectedFriendDetails {
+  color: rgb(64, 224, 208);
+  margin-left: 2%;
+}
+
+#preSelectedFriend h3 {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+#preSelectedFriend h4 {
+  padding-top: 0px;
+  margin-top:0px;
+}
+
+#selectedFriendDetails h4 {
+  padding-bottom: 0px;
+  margin-bottom: 0px
+}
+
+#selectedFriendDetails h5 {
+  padding-top: 0px;
+  margin-top: 0px;
+}
+
+.categorySelect {
+  width: 80%;
 }
 
 #userFriendList {
@@ -195,19 +298,35 @@
   overflow: scroll;
 }
 
-#nonUserFriends {
+#userFriendsBottom {
   display: flex;
   justify-content: space-around;
+  text-align: center;
   height: 300px;
+  width: 100%;;
 }
 
+#userFriendsBottom h3 {
+  color: rgb(64, 224, 208);
+}
 
+#selectedFriendCategory {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#selectedFriendCategory h4 {
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
 
 .eventBox {
   color: rgb(64, 224, 208);
   height: 50%;
   width: 100%;
 }
+
 .eventDetails {
   display: flex;
   justify-content: space-around;
@@ -217,45 +336,4 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
-
-
-.bubble-chart-container {
-  flex: 1;
-  position: relative;
-  display: flex;
-  user-select: none;
-  justify-content: center;
-}
-
-/* Center text in the circle, and hide any overflow */
-.bubble-chart-container .bubble-chart-text .bubble-label {
-  text-align: center;
-  overflow: hidden;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  border-radius: 50%;
-  will-change: left, top, height, width;
-}
-
-/* Show the overflow when hovering over a label */
-.bubble-chart-container .bubble-chart-text .bubble-label:hover {
-  overflow: visible;
-  font-weight: bold;
-}
-
-/* Optional, but recommended - reduce the size of text on medium bubbles */
-.bubble-chart-container .bubble-chart-text .bubble-label.medium {
-  font-size: 0.8em;
-}
-
-/* Optional, but recommended - hide the text on small bubbles */
-.bubble-chart-container .bubble-chart-text .bubble-label.small {
-  font-size: 0;
-}
-/* Make sure to unhide the text when hovering */
-.bubble-chart-container .bubble-chart-text .bubble-label.small:hover {
-  font-size: 0.8em;
 }
