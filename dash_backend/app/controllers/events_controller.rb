@@ -21,7 +21,7 @@ class EventsController < ApplicationController
         Invite.create(user_id: friend, event_id: @event.id)
       end
       @friends.each do |friend|
-        Emailer.sendEmail(@user.name).deliver!
+        Emailer.sendEmail(@user.name, @event).deliver!
       end
       render json:@event
     else
@@ -39,7 +39,7 @@ class EventsController < ApplicationController
         @invite = Invite.find_by(user_id: friend, event_id: @event.id)
         if @invite.nil?
           Invite.create(user_id: friend, event_id: @event.id)
-          Emailer.sendEmail(@user.name).deliver!
+          Emailer.sendEmail(@user.name, @event).deliver!
         end
       end
       render json:@event
