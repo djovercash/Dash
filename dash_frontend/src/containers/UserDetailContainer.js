@@ -20,7 +20,9 @@ class UserDetailContainer extends React.Component{
   whatToRender = (props) => {
     if (props.isLoading) {
       return (
-        <img src="loading.gif" alt="loading"/>
+        <div id="loading">
+          <h1 className="colors-on">DASH</h1>
+        </div>
       )
     } else if (props.createForm) {
       return (
@@ -64,7 +66,7 @@ class UserDetailContainer extends React.Component{
 
 function mapStateToProps(state) {
   return {
-    event: state.specific_event, 
+    event: state.specific_event,
     createForm: state.createForm,
     editForm: state.editForm,
     eventful: state.eventfulSearch,

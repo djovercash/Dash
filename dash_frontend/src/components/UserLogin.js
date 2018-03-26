@@ -3,8 +3,8 @@ import {FlexyFlipCard} from 'flexy-flipcards'
 import { login, signup } from '../actions/users'
 import { connect } from 'react-redux'
 
-
 class Login extends React.Component {
+
 
   handleLogin = (event) => {
     event.preventDefault()
@@ -26,7 +26,7 @@ class Login extends React.Component {
         frontBackgroundColor="rgba(0, 0, 0, 0.6)"
         backBackgroundColor="rgba(0, 0, 0, 0.6)">
         <div>
-          <h1 ref='flipper'>DASH</h1>
+          <h1 ref='flipper' className="colors-on">DASH</h1>
         </div>
         <div>
           <form id="loginForm" onSubmit={this.handleLogin}>
