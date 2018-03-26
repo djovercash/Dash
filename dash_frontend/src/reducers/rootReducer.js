@@ -55,13 +55,26 @@ function rootReducer (state = defaultState, action) {
         return {...state, isLoading: true};
     case FETCHED_USERS:
         const otherUsers = action.payload.filter(user => user.id !== state.user.id)
-        return {...state, users: otherUsers, isLoading: false, findFriends: true}
+        return {...state,
+          users: otherUsers,
+          isLoading: false,
+          findFriends: true,
+          createForm: false,
+          editForm: false,
+          eventfulSearch: false,
+          updateAccount: false,}
     case SIGNUP:
           return {...state, signup: true};
     case NOSIGNUP:
           return {...state, signup: false};
     case ACCOUNT:
-          return {...state, updateAccount: true};
+          return {...state,
+            findFriends: false,
+            isLoading: false,
+            createForm: false,
+            editForm: false,
+            eventfulSearch: false,
+            updateAccount: true};
     case HOME:
           return {...state,
             findFriends: false,
@@ -154,7 +167,13 @@ function rootReducer (state = defaultState, action) {
     case UPDATED_FRIEND_CATEGORY:
         return {...state, user: action.payload, isLoading: false};
     case CREATE_EVENT:
-        return {...state, createForm: true};
+        return {...state,
+          createForm: true,
+          findFriends: false,
+          isLoading: false,
+          editForm: false,
+          eventfulSearch: false,
+          updateAccount: false,};
     case ADDING_EVENT:
         return {...state, isLoading: true, createForm: false};
     case ADDED_EVENT:
@@ -228,7 +247,13 @@ function rootReducer (state = defaultState, action) {
     case FETCHING_EVENTFUL_EVENTS:
         return {...state, isLoading: true};
     case FETCHED_EVENTFUL_EVENTS:
-        return {...state, eventfulEvents: action.payload.events.event, isLoading: false, eventfulSearch: true};
+        return {...state, eventfulEvents: action.payload.events.event,
+          isLoading: false,
+          eventfulSearch: true,
+          findFriends: false,
+          createForm: false,
+          editForm: false,
+          updateAccount: false,};
     case CREATING_CATEGORY:
         return {...state, isLoading: true};
     case CREATED_CATEGORY:

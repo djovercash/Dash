@@ -84,21 +84,21 @@ class UserEventfulList extends React.Component{
       user_id: this.props.user.id,
       friends: []
     }
-    console.log(action)
     this.props.addEvent(action)
   }
 
   whatToRender() {
     if (this.state.endOfList === true) {
       return (
-        <div>
+        <div className="eventfulContainer">
           <h1>No more events listed for your hometown</h1>
           <h3>Please visit: <a href="http://eventful.com/events" target="_blank" rel="noopener noreferrer">Eventful</a> for more listings</h3>
         </div>
       )
     } else if (this.state.event.title) {
       return (
-        <div>
+        <div className="eventfulContainer">
+          <h5>Powered by Eventful</h5>
           <h1>{this.fixTitle(this.state.event.title)}</h1>
           <div id="eventDetails">
             <div>

@@ -457,7 +457,6 @@ button:hover {
   padding-left: 4px;
 }
 
-
 @keyframes colors-on {
   from {
     text-shadow: none;
@@ -465,4 +464,13 @@ button:hover {
   to {
     text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #666cec, 0 0 20px #cccef8, 0 0 35px #cccef8, 0 0 40px #cccef8, 0 0 50px #cccef8, 0 0 75px #cccef8;
   }
+}
+
+.eventfulContainer {
+  color: rgb(64, 224, 208);
+}
+
+#eventInvitationsLists {
+  display: flex;
+  justify-content: space-around;
 }

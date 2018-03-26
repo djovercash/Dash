@@ -24,54 +24,6 @@ const UserEventDetails = (props) => {
     return momo
   }
 
-  // const fixTime = (time) => {
-  //   console.log(time)
-  //   const startDateTimeObj = new Date(time)
-  //   const startDateTimeString = startDateTimeObj.toString()
-  //   if (startDateTimeString[36] === "D") {
-  //     const fixedTime = time.slice(0, -8)
-  //     const splitT = fixedTime.split("T")
-  //     const date = splitT[0]
-  //     const arrayTime = splitT[1].split(":")
-  //     const hour = parseInt(arrayTime[0])
-  //     const fixedHour = hour - 4
-  //     if (fixedHour < 12) {
-  //       const finalHour = `0${fixedHour}`
-  //       const newTime = finalHour + ":" + arrayTime[1]
-  //       const newDateTime = date + " " + newTime
-  //       const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
-  //       return momo
-  //     } else {
-  //       const finalHour = fixedHour.toString()
-  //       const newTime = finalHour + ":" + arrayTime[1]
-  //       const newDateTime = date + " " + newTime
-  //       const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
-  //       return momo
-  //     }
-  //   } else {
-  //     const fixedTime = time.slice(0, -8)
-  //     const splitT = fixedTime.split("T")
-  //     const date = splitT[0]
-  //     const arrayTime = splitT[1].split(":")
-  //     const hour = parseInt(arrayTime[0])
-  //     const fixedHour = hour - 5
-  //     if (fixedHour < 12) {
-  //       const finalHour = `0${fixedHour}`
-  //       const newTime = finalHour + ":" + arrayTime[1]
-  //       const newDateTime = date + " " + newTime
-  //       const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
-  //       return momo
-  //     } else {
-  //       const finalHour = fixedHour.toString()
-  //       const newTime = finalHour + ":" + arrayTime[1]
-  //       const newDateTime = date + " " + newTime
-  //       const momo = moment(newDateTime).tz("America/New_York").format("MMM, Do YYYY, h:mm a")
-  //       return momo
-  //     }
-  //   }
-  // }
-
-
   const eventOwner = () => {
     const user = props.event.users.find(user => user.id === props.user.id)
     if (user.invites[0].host === true) {
@@ -97,28 +49,48 @@ const UserEventDetails = (props) => {
     }
   }
 
+  const eventInvitations = () => {
+    const pending = props.event.users.filter(user => user.invites[0].status === "pending" && user.id !== props.user.id)
+    const confirmed = props.event.users.filter(user => user.invites[0].status === "confirmed" && user.id !== props.user.id)
+    const declined = props.event.users.filter(user => user.invites[0].status === "declined" && user.id !== props.user.id)
+    return (
+      <div id="eventInvitationsLists">
+        <div className="eventList">
+          <h4>Pending</h4>
+          <ul className="list">
+          {pending.length > 0 ?
+            pending.map(user => <li key={user.id}>{user.name}</li>)
+            :
+            <li>None Pending</li>
+          }
+          </ul>
+        </div>
+        <div className="eventList">
+          <h4>Comfirmed</h4>
+          <ul className="list">
+          {confirmed.length > 0 ?
+            confirmed.map(user => <li key={user.id}>{user.name}</li>)
+            :
+            <li>None Confirmed</li>
+          }
+          </ul>
+        </div>
+        <div className="eventList">
+          <h4>Declined</h4>
+          <ul className="list">
+          {declined.length > 0 ?
+            declined.map(user => <li key={user.id}>{user.name}</li>)
+            :
+            <li>None Declined</li>
+          }
+          </ul>
+        </div>
+      </div>
+    )
+  }
+
   const whatToRender = (props) => {
-    if (props.isLoading) {
-      return (
-        <img src="loading.gif" alt="loading"/>
-      )
-    } else if (props.createForm) {
-      return (
-        <UserCreateEventForm />
-      )
-    } else if (props.editForm) {
-      return (
-        <UserEditEventForm />
-      )
-    } else if (props.eventful) {
-      return (
-        <UserEventfulList />
-      )
-    } else if (props.updateAccount) {
-      return (
-        <UserUpdateForm />
-      )
-    } else if (props.event.title === "") {
+    if (props.event.title === "") {
       return (
         <div className="eventBox">
           <h1>DASH</h1>
@@ -130,7 +102,7 @@ const UserEventDetails = (props) => {
           <h1>{props.event.title}</h1>
           <div className="eventDetails">
             <div>
-              <h4>Invited by: {findOwner(props)}</h4>
+              <h4>Created by: {findOwner(props)}</h4>
               <h4>Location: {props.event.location}</h4>
               <h4>Start Time: {fixTime(props.event.start_time)}</h4>
               <h4>End Time: {fixTime(props.event.end_time)}</h4>
@@ -141,6 +113,9 @@ const UserEventDetails = (props) => {
               title="Stop sending me errors"
               >
             </iframe>
+          </div>
+          <div>
+            {eventInvitations()}
           </div>
         </div>
       )
