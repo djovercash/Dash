@@ -1,6 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {addEvent} from '../actions/events'
+import Calendar from 'react-calendar'
+import moment from 'moment-timezone'
 
 class UserCreateEventForm extends React.Component {
 
@@ -8,9 +10,9 @@ class UserCreateEventForm extends React.Component {
     title: '',
     location: '',
     description: '',
-    start_date: '',
+    start_date: new Date(),
     start_time: '',
-    end_date: '',
+    end_date: new Date(),
     end_time: '',
     friendFilter: '',
     friends: [...this.props.user.friends],
@@ -31,11 +33,27 @@ class UserCreateEventForm extends React.Component {
     })
   }
 
+  handleStartDate = (e) => {
+    this.setState({
+      start_date: e
+    })
+  }
+
+  handleEndDate = (e) => {
+    this.setState({
+      end_date: e
+    })
+  }
+
   handleOnSubmit = (e) => {
     e.preventDefault()
-    const startDateElements = this.state.start_date.split("-")
+    const startDateMoment = moment(this.state.start_date).format()
+    const endDateMoment = moment(this.state.end_date).format()
+    const startDateArray = startDateMoment.split("T")
+    const endDateArray = endDateMoment.split("T")
+    const startDateArraySplit = startDateArray[0].split("-")
+    const endDateArraySplit = endDateArray[0].split("-")
     const startTimeElements = this.state.start_time.split(":")
-    const endDateElements = this.state.end_date.split("-")
     const endTimeElements = this.state.end_time.split(":")
     this.state.friends.filter(friend => {
       for (const category of friend.friend_category) {
@@ -50,8 +68,8 @@ class UserCreateEventForm extends React.Component {
       title: this.state.title,
       location: this.state.location,
       description: this.state.description,
-      start_time: new Date(startDateElements[0], startDateElements[1] - 1, startDateElements[2], startTimeElements[0], startTimeElements[1]),
-      end_time: new Date(endDateElements[0], endDateElements[1] - 1, endDateElements[2], endTimeElements[0], endTimeElements[1]),
+      start_time: new Date(startDateArraySplit[0], startDateArraySplit[1] - 1, startDateArraySplit[2], startTimeElements[0], startTimeElements[1]),
+      end_time: new Date(endDateArraySplit[0], endDateArraySplit[1] - 1, endDateArraySplit[2], endTimeElements[0], endTimeElements[1]),
       user_id: this.props.user.id,
       friends: finalInvites
     }
@@ -62,13 +80,20 @@ class UserCreateEventForm extends React.Component {
     const filteredFriends = this.state.friends.filter(friend => friend.name.toUpperCase().includes(this.state.friendFilter.toUpperCase()))
     if (filteredFriends.length > 0 && this.state.friendFilter !== '') {
       return (
-        <div>
-          <h4>{filteredFriends[0].name} | </h4>
-          {!this.state.invitedFriends.includes(filteredFriends[0]) ?
-            <button onClick={() => {this.handleInvite(filteredFriends[0])}}>Invite</button>
-            :
-            <h5>Invited</h5>
-           }
+        <div className="otherUsers">
+          <div className="friendDashboardList">
+            <div className="friendDashboardListImg">
+              <img src={filteredFriends[0].photo} width="50px" height="50px" alt={filteredFriends[0].name} />
+            </div>
+            <div className="friendDashboardStatus">
+              <h5>{filteredFriends[0].name} | </h5>
+              {!this.state.invitedFriends.includes(filteredFriends[0]) ?
+                <button onClick={() => {this.handleInvite(filteredFriends[0])}}>Invite</button>
+                :
+                <h5>Invited</h5>
+              }
+            </div>
+          </div>
         </div>
       )
     } else {
@@ -95,19 +120,18 @@ class UserCreateEventForm extends React.Component {
     const userSelectedCategories = this.state.userCategories.filter(category => !this.state.createCategory.includes(category.id))
     const selectedUserCategories = this.state.userCategories.filter(category => this.state.createCategory.includes(category.id))
     return (
-      <div>
-        <h3>Here are the categories</h3>
-        <div>
-          <h4>All Categories</h4>
-          <select multiple="multiple" onClick={this.handleOnClickAdd}>
+      <div id="formCategory">
+        <div className="formCategorySelect">
+          <h4>All</h4>
+          <select className="formCategorySelectOption" multiple="multiple" onClick={this.handleOnClickAdd}>
             {userSelectedCategories.map(category => {
               return <option key={category.id} value={category.id}>{category.name}</option>
             })}
           </select>
         </div>
-        <div>
-          <h4>Selected Categories</h4>
-          <select multiple="multiple" onClick={this.handleOnClickRemove}>
+        <div className="formCategorySelect">
+          <h4>Selected</h4>
+          <select className="formCategorySelectOption" multiple="multiple" onClick={this.handleOnClickRemove}>
             {selectedUserCategories.map(category => {
               return <option key={category.id} value={category.id}>{category.name}</option>
             })}
@@ -125,34 +149,56 @@ class UserCreateEventForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleOnSubmit}>
-          <h3>Create a new Event</h3>
-          <label>Title: </label>
-          <input type="text" name="title" onChange={this.handleOnChange}/>
-          <label>Location: </label>
-          <input type="text" name="location" onChange={this.handleOnChange}/>
-          <label>Description: </label>
-          <input type="text" name="description" onChange={this.handleOnChange}/>
-          <label>Start Date: </label>
-          <input type="date" name="start_date" onChange={this.handleOnChange}/>
-          <label>Start Time: </label>
-          <input type="time" name="start_time" onChange={this.handleOnChange}/>
-          <label>End Date: </label>
-          <input type="date" name="end_date" onChange={this.handleOnChange}/>
-          <label>End Time: </label>
-          <input type="time" name="end_time" onChange={this.handleOnChange}/>
-          <input type="submit" value="Submit" />
-        </form>
-        <label>Invite Friends</label>
-        <input type="text" name="friendFilter" onChange={this.handleOnChange} />
-        <div>
-          {this.renderFriendsForEventInvites()}
+      <div className="form">
+        <h1>Create a New Event</h1>
+        <div className="formFields">
+          <div>
+            <label>Title: </label>
+            <input type="text" name="title" onChange={this.handleOnChange}/>
+          </div>
+          <div>
+            <label>Location: </label>
+            <input type="text" name="location" onChange={this.handleOnChange}/>
+          </div>
+          <div>
+            <label>Description: </label>
+            <input type="text" name="description" onChange={this.handleOnChange}/>
+          </div>
         </div>
-        <div>
-          <h3>Invite A Group</h3>
-          {this.renderUserCategories()}
+        <div id="dateTimeContainer">
+          <div>
+            <h3>Start Date and Time</h3>
+            <Calendar
+              onChange={this.handleStartDate}
+              value={this.state.start_date}
+            />
+            <label>Start Time: </label>
+            <input type="time" name="start_time" onChange={this.handleOnChange}/>
+          </div>
+          <div>
+            <h3>End Date and Time</h3>
+            <Calendar
+              onChange={this.handleEndDate}
+              value={this.state.end_date}
+            />
+            <label>End Time: </label>
+            <input type="time" name="end_time" onChange={this.handleOnChange}/>
+          </div>
         </div>
+        <div id="friendInviteContainer">
+          <div id="SpecificInvite">
+            <h3>Invite Specific Friend</h3>
+            <input type="text" name="friendFilter" onChange={this.handleOnChange} />
+            <div>
+              {this.renderFriendsForEventInvites()}
+            </div>
+          </div>
+          <div id="BubbleInvite">
+            <h3>Invite a Bubble</h3>
+            {this.renderUserCategories()}
+          </div>
+        </div>
+        <button className="formButton" onClick={this.handleOnSubmit}>Create</button>
       </div>
     )
   }

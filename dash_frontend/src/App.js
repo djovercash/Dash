@@ -16,6 +16,9 @@ class App extends Component {
     if (localStorage["user_id"]) {
       let id = localStorage.user_id
       this.props.fetchUser(id)
+      this.props.history.push('/home')
+    } else {
+      this.props.history.push('/login')
     }
   }
 

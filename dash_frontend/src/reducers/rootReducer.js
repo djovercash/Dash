@@ -25,7 +25,7 @@ export const defaultState = {
   },
   users: [],
   isLoading: false,
-  createForm: false,
+  createForm: true,
   editForm: false,
   loggedIn: false,
   signup: false,

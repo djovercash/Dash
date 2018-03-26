@@ -28,9 +28,9 @@ const UserAvatar = (props) => {
       return event.invites[0].status === "confirmed"
     })
 
-    if (confirmedEvents.length > 3) {
-      const topThreeEvents = confirmedEvents.slice(0, 3)
-      return topThreeEvents
+    if (confirmedEvents.length > 5) {
+      const topFiveEvents = confirmedEvents.slice(0, 5)
+      return topFiveEvents
     } else {
       return confirmedEvents
     }
@@ -47,7 +47,9 @@ const UserAvatar = (props) => {
   const events = topThreeEvents()
   return (
     <div>
-      <img src={props.user.photo}  alt={props.user.name} height="250" width="250"/>
+      <div id="userAvatarImage">
+        <img src={props.user.photo}  alt={props.user.name} />
+      </div>
       <div>
         <button onClick={createEvent}>Create Event</button>
         <button onClick={() => props.fetchEventfulAPI(props.user.hometown)}>Find Event</button>
@@ -59,7 +61,7 @@ const UserAvatar = (props) => {
         <ul className="list">
           {events.map(event => {
             let start_time = event.start_time.toString()
-            let start_date = moment(start_time).format("MMM, Do YYYY")
+            let start_date = moment(start_time).format("MMM, Do")
             return <li key={event.id} onClick={() => {findEvent(event.id)}}>{event.title.length > 10 ? event.title.substring(0, 10) : event.title} | {start_date}</li>})}
         </ul>
         </div>

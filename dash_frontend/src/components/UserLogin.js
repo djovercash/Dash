@@ -14,7 +14,7 @@ class Login extends React.Component {
     }
     this.props.login(user).then(res => {
       if (!this.props.error) {
-        setTimeout(() => this.props.history.push('/home'), 1000)
+        setTimeout(() => this.props.history.push('/home'), 500)
       }
     })
   }
