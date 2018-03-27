@@ -511,6 +511,19 @@ button:hover {
   }
 }
 
+.noEventfulContainer {
+  color: rgb(64, 224, 208);
+  margin-top: 20%;
+}
+
+.noEventfulContainer h1 {
+  margin-bottom: 0px;
+}
+
+.noEventfulContainer h3 {
+  margin-top: 0px;
+}
+
 .eventfulContainer {
   color: rgb(64, 224, 208);
 }

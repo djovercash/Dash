@@ -111,9 +111,9 @@ class UserEventfulList extends React.Component{
   whatToRender() {
     if (this.state.endOfList === true) {
       return (
-        <div className="eventfulContainer">
-          <h1>No more events listed for your hometown</h1>
-          <h3>Please visit: <a href="http://eventful.com/events" target="_blank" rel="noopener noreferrer">Eventful</a> for more listings</h3>
+        <div className="noEventfulContainer">
+          <h1>For more events listed for your hometown</h1>
+          <h3>Please visit: <a href="http://eventful.com/events" target="_blank" rel="noopener noreferrer">Eventful</a></h3>
         </div>
       )
     } else if (this.state.event.title) {
