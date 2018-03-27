@@ -18,8 +18,6 @@ class UserEventfulList extends React.Component{
     })
   }
 
-
-
   fixTime = (time) => {
     const momo = moment(this.state.event.start_time).format("h:mm a")
     return momo
