@@ -22,6 +22,19 @@ button:hover {
   background-color: rgb(77, 77, 77);
 }
 
+#submit {
+  color: rgb(77, 77, 77);
+  background-color: rgb(64, 224, 208);
+  font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+  border: 0px;
+  outline: 0px;
+}
+
+#submit:hover {
+  color: rgb(64, 224, 208);
+  background-color: rgb(77, 77, 77);
+}
+
 #navbar {
   display: flex;
   justify-content: space-between;
@@ -455,6 +468,10 @@ button:hover {
 
 .form {
   color: rgb(64,224, 208);
+}
+
+.form h1 {
+  margin-bottom: 0px;
 }
 
 .formButton {
