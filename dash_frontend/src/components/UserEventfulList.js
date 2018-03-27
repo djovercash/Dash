@@ -18,8 +18,15 @@ class UserEventfulList extends React.Component{
     })
   }
 
+
+
   fixTime = (time) => {
-    const momo = moment(this.state.event.start_time).format("MMM, Do YYYY, h:mm a")
+    const momo = moment(this.state.event.start_time).format("h:mm a")
+    return momo
+  }
+
+  fixDate = (date) => {
+    const momo = moment(this.state.event.start_time).format("MMM, Do YYYY")
     return momo
   }
 
@@ -87,6 +94,20 @@ class UserEventfulList extends React.Component{
     this.props.addEvent(action)
   }
 
+  makeMap = () => {
+    const mapAddress = this.state.event.venue_address + ' ' + this.state.event.city_name + ' ' + this.state.event.region_abbr
+    const mapAddressArray = mapAddress.split(' ')
+    for(const e in mapAddressArray) {
+      if (!e) {
+        let index = mapAddressArray.indexOf(e)
+        mapAddressArray.slice(index, 1)
+      }
+    }
+    const mapAddressStr = mapAddressArray.join("+")
+    const googleMapSrc = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBKVFYXi0xh1ezi1fDswB5fLvvQXd6pSGA&q=${mapAddressStr}`
+    return googleMapSrc
+  }
+
   whatToRender() {
     if (this.state.endOfList === true) {
       return (
@@ -98,14 +119,24 @@ class UserEventfulList extends React.Component{
     } else if (this.state.event.title) {
       return (
         <div className="eventfulContainer">
-          <h5>Powered by Eventful</h5>
+          <h5><span>Powered by Eventful</span></h5>
           <h1>{this.fixTitle(this.state.event.title)}</h1>
-          <div id="eventDetails">
+          <div id="eventfulDetails">
+            <div id="eventfulMap">
+              <iframe
+                src={this.makeMap()}
+                title="Google Map"
+                >
+              </iframe>
+            </div>
             <div>
-              <p>{this.fixDescription(this.state.event.description)}</p>
-              <h4>Location: {this.state.event.venue_address + ", " + this.state.event.city_name + ", " + this.state.event.region_abbr}</h4>
-              <h4>Time: {this.fixTime(this.state.event.start_time)}</h4>
-              <h4>More Info: {this.state.event.url ? <a href={this.state.event.url} target="_blank">Click Here</a> : "No additional info offered"}</h4>
+              <h3>Location: <span>{this.state.event.venue_address + ", " + this.state.event.city_name + ", " + this.state.event.region_abbr}</span></h3>
+              <h3>Description: <span>{this.fixDescription(this.state.event.description)}</span></h3>
+              <div id="eventfulEventSpecs">
+                <h3>Date: <span>{this.fixDate(this.state.event.start_time)}</span></h3>
+                <h3>Start Time: <span>{this.fixTime(this.state.event.start_time)}</span></h3>
+              </div>
+              <p><a className="Button" href={this.state.event.url} target="_blank">Click Here for More Info</a></p>
               <button onClick={this.nextEvent}>Next Event</button>
               <button onClick={() => this.createEvent(this.state.event)}>Create Personal Event</button>
             </div>

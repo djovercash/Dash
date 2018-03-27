@@ -5,10 +5,6 @@ import {connect} from 'react-redux'
 class BubbleWeb extends React.Component {
 
   data() {
-    const categories = this.props.user.friend_categories.map(category => category.name)
-    const categoryObjArray = categories.map(category => {
-      return {label: category}
-    })
     const friendsAndCategories = this.props.user.friends.filter(friend => friend.name !== this.props.user.name)
     const friendCategories = []
     const categoryCounts = {}
@@ -33,7 +29,6 @@ class BubbleWeb extends React.Component {
       finalCounts.push({"label": key, "value": categoryCounts[key]})
     }
     return finalCounts
-
   }
 
   render() {
@@ -49,14 +44,14 @@ class BubbleWeb extends React.Component {
             height={300}
             showLegend={false}
             valueFont={{
-                  family: 'Arial',
+                  family: 'Arial Rounded MT Bold',
                   size: 12,
                   color: '#fff',
                   weight: 'bold',
                 }}
             labelFont={{
-                  family: 'Arial',
-                  size: 16,
+                  family: 'Arial Rounded MT Bold',
+                  size: 12,
                   color: '#fff',
                   weight: 'bold',
                 }}

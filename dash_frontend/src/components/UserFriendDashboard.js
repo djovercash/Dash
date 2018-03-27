@@ -7,6 +7,7 @@ class UserFriendDashboard extends React.Component{
   state = {
     friendFinder: '',
     selectedFriend: {},
+    selectedCategory: '',
     createdCategory: '',
     categorySelection: 'All',
     userCategories: [],
@@ -14,9 +15,54 @@ class UserFriendDashboard extends React.Component{
     destroyCategory: []
   }
 
+  componentDidMount() {
+    this.addClick()
+  }
+
   handleOnChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value
+    })
+  }
+
+  findCategoryFriends = () => {
+    const userFriends = this.props.user.friends
+    const userFriendsEdited = userFriends.filter(friend => friend.id !== this.props.user.id)
+    const userCategories = this.props.user.friend_categories
+    const userFriendsCategories = userFriendsEdited.filter(friend => {
+      for (let i = 0; i < friend.friend_category.length; i++) {
+        if (friend.friend_category[i].name.toUpperCase() === this.state.selectedCategory.toUpperCase()) {
+          return friend
+        }
+      }
+    })
+    return (
+          <div id="userCategoryFriendsList">
+            <div className="categoryEventList">
+              <ul>
+              {userFriendsCategories.map(friend => {
+                return <li onClick={() => {this.selectFriend(friend)}} key={friend.id}>{friend.name}</li>
+              })}
+              </ul>
+            </div>
+          </div>
+    )
+  }
+
+  onClick(key) {
+    const bubble = key.split("-").join(" ")
+    this.setState({
+      selectedCategory: bubble
+    })
+    this.findCategoryFriends()
+  }
+
+  addClick() {
+    let list = document.getElementsByTagName("circle")
+    list.map = Array.prototype.map
+    list.map(element => {
+      element.addEventListener("click", () => {
+        this.onClick(element.id)})
     })
   }
 
@@ -106,8 +152,24 @@ class UserFriendDashboard extends React.Component{
       selectedFriend: friend,
       userCategories: this.props.user.friend_categories.filter(category => category.name !== "All"),
       createCategory: friendCategoryIdsWithoutOne,
-      destroyCategory: nonFriendCategoryIdsWithoutOne
+      destroyCategory: nonFriendCategoryIdsWithoutOne,
+      selectedCategory: ''
     })
+  }
+
+  friendOrBubble = () => {
+    if (this.state.selectedCategory !== '') {
+      const categoryTitleArray = this.state.selectedCategory.split(" ")
+      return (
+        <div id="categoryfriends">
+          <h1>Friend Bubble</h1>
+          <h3>{this.state.selectedCategory}</h3>
+          {this.findCategoryFriends()}
+        </div>
+      )
+    } else {
+      return this.selectedFriend()
+    }
   }
 
   selectedFriend = () => {
@@ -224,7 +286,7 @@ class UserFriendDashboard extends React.Component{
             <BubbleChart />
           </div>
           <div id="selectedFriendContainer">
-            {this.selectedFriend()}
+            {this.friendOrBubble()}
           </div>
         </div>
         <div id="userFriendsBottom">

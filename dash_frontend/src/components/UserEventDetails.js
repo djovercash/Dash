@@ -110,7 +110,7 @@ const UserEventDetails = (props) => {
             </div>
             <iframe
               src={props.event.google_map}
-              title="Stop sending me errors"
+              title="Google Map"
               >
             </iframe>
           </div>
