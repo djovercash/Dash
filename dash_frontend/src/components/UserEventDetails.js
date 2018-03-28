@@ -32,7 +32,7 @@ const UserEventDetails = (props) => {
       const declined = props.event.users.filter(user => user.invites[0].status === "declined" && user.id !== props.user.id).length
       return (
         <div>
-          <h4>Pending: {pending} | Confirmed: {confirmed} | Declined: {declined}</h4>
+          <h4><span>Pending: </span>{pending} | <span>Confirmed: </span>{confirmed} | <span>Declined: </span>{declined}</h4>
           <button onClick={props.editEvent}>Edit {props.event.title}</button>
           <button onClick={() => {props.deleteEvent(props.event)}}>Delete {props.event.title}</button>
         </div>
@@ -55,7 +55,7 @@ const UserEventDetails = (props) => {
     const declined = props.event.users.filter(user => user.invites[0].status === "declined" && user.id !== props.user.id)
     return (
       <div id="eventInvitationsLists">
-        <div className="eventList">
+        <div className="invitationList">
           <h4>Pending</h4>
           <ul className="list">
           {pending.length > 0 ?
@@ -65,7 +65,7 @@ const UserEventDetails = (props) => {
           }
           </ul>
         </div>
-        <div className="eventList">
+        <div className="invitationList">
           <h4>Comfirmed</h4>
           <ul className="list">
           {confirmed.length > 0 ?
@@ -75,7 +75,7 @@ const UserEventDetails = (props) => {
           }
           </ul>
         </div>
-        <div className="eventList">
+        <div className="invitationList">
           <h4>Declined</h4>
           <ul className="list">
           {declined.length > 0 ?
@@ -101,18 +101,21 @@ const UserEventDetails = (props) => {
         <div className="eventBox">
           <h1>{props.event.title}</h1>
           <div className="eventDetails">
-            <div>
-              <h4>Created by: {findOwner(props)}</h4>
-              <h4>Location: {props.event.location}</h4>
-              <h4>Start Time: {fixTime(props.event.start_time)}</h4>
-              <h4>End Time: {fixTime(props.event.end_time)}</h4>
+            <div id="eventDetailsStats">
+              <h4><span>Created by: </span>{findOwner(props)}</h4>
+              <h4><span>Description: </span>{props.event.description !== '' ? props.event.description : "No Description Given"}</h4>
+              <h4><span>Location: </span>{props.event.location}</h4>
+              <h4><span>Start Time: </span>{fixTime(props.event.start_time)}</h4>
+              <h4><span>End Time: </span>{fixTime(props.event.end_time)}</h4>
               {eventOwner()}
             </div>
-            <iframe
-              src={props.event.google_map}
-              title="Google Map"
-              >
-            </iframe>
+            <div id="eventDetailsMap">
+              <iframe
+                src={props.event.google_map}
+                title="Google Map"
+                >
+              </iframe>
+            </div>
           </div>
           <div>
             {eventInvitations()}

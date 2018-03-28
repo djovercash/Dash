@@ -48,17 +48,25 @@ class UserDashboard extends React.Component{
           <div className="eventList">
             <h2>Your Events</h2>
             <ul className="list">
-              {userNewCreatedEvents.map(event => {
-                return <li key={event.id} onClick={() => {this.findEvent(event.id)}}>{event.title} | Confirmed: {this.confirmedAttendees(event.id, this.props.user)} </li>
-              })}
+              {userNewCreatedEvents.length > 0 ?
+                userNewCreatedEvents.map(event => {
+                  return (<li key={event.id} onClick={() => {this.findEvent(event.id)}}>{event.title} | Confirmed: {this.confirmedAttendees(event.id, this.props.user)} </li>)
+                })
+                :
+                  <li>No current events</li>
+              }
             </ul>
           </div>
           <div className="eventList">
             <h2>Invites</h2>
             <ul className="list">
-              {userNewInvitedEvents.map(event => {
-                return <li key={event.id} onClick={() => {this.findEvent(event.id)}}>{event.title} | Status: {event.invites[0].status} </li>
-              })}
+              {userNewInvitedEvents.length > 0 ?
+                userNewInvitedEvents.map(event => {
+                  return (<li key={event.id} onClick={() => {this.findEvent(event.id)}}>{event.title} | Status: {event.invites[0].status} </li>)
+                })
+                :
+                  <li>No current invites</li>
+              }
             </ul>
           </div>
         </div>

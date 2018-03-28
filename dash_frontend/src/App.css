@@ -415,6 +415,13 @@ input {
   display: flex;
   justify-content: space-around;
   color:rgb(217, 217, 217);
+  margin-left: 2%;
+  width: 100%;
+}
+
+.eventDetails h4 {
+  margin-top: 0px;
+  margin-bottom: 2%;
 }
 
 #userAvatarImage {
@@ -664,4 +671,45 @@ input {
 .calendar {
   background-color: rgb(217, 217, 217);
   color: rgb(77, 77, 77)
+}
+
+.invitationList h4 {
+  margin-bottom: 0px;
+}
+
+.invitationList ul {
+  background-color: rgb(217, 217, 217);
+  border: 2px solid rgba(0, 0, 0, 0.6);
+  text-align: left;
+  padding-left: 0px;
+  margin-left: 0px;
+  margin-top: 0px;
+  margin-bottom: 1%;
+  height: 55%;
+  overflow: scroll;
+}
+
+.invitationList li {
+  color: rgb(92, 92, 92);
+  padding: 2px 5px 2px 5px;
+}
+
+.invitationList li:hover{
+  background-color: rgb(64, 224, 208);
+}
+
+.invitationList li:before {
+  content: '✓';
+}
+
+.eventDetails span {
+  color: rgb(64, 224, 208);
+}
+
+#eventDetailsStats {
+  width: 50%;
+}
+
+#eventDetailsMap {
+  width: 50%;
 }

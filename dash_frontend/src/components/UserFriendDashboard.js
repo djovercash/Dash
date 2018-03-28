@@ -279,6 +279,7 @@ class UserFriendDashboard extends React.Component{
 
   render() {
     const userCategories = this.props.user.friend_categories
+    console.log(userCategories)
     return (
       <div id="friendDashboard">
         <div id="userFriendsTop">

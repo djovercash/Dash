@@ -18,7 +18,7 @@ const UserAvatar = (props) => {
     const newestEvents = []
 
     for (const event of sortedEvents) {
-      let startTime = new Date(event.start_time)
+      let startTime = new Date(event.end_time)
       if (startTime > currentDate) {
         newestEvents.push(event)
       }

@@ -43,9 +43,9 @@ class UserUpdateForm extends React.Component {
     event.preventDefault()
       let user = {
       id: this.state.id,
-      name: event.target.first_name.value + " " + event.target.last_name.value,
-      email: event.target.email.value,
-      hometown: event.target.hometown.value,
+      name: this.state.first_name + " " + this.state.last_name,
+      email: this.state.email,
+      hometown: this.state.hometown,
       photo: this.state.photo,
       events: this.props.user.events,
       friends: this.props.user.friends
