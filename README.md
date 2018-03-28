@@ -12,4 +12,4 @@ In development, I used D3.js to create a bubble chart of user created categories
 - Add google authentication when a user logs in.
 
 # Video Demo
-Coming soon...
+Click <a href="https://youtu.be/JaruaeMIogY" target="_blank">here</a> for a video demo of Dash.
