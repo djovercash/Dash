@@ -207,6 +207,7 @@ class UserEditEventForm extends React.Component {
             <Calendar
               onChange={this.handleStartDate}
               value={this.state.start_date}
+              className="calendar"
             />
             <label>Start Time: </label>
             <input type="time" name="start_time" value={this.state.start_time} onChange={this.handleOnChange}/>
@@ -216,6 +217,7 @@ class UserEditEventForm extends React.Component {
             <Calendar
               onChange={this.handleEndDate}
               value={this.state.end_date}
+              className="calendar"
             />
             <label>End Time: </label>
             <input type="time" name="end_time" value={this.state.end_time} onChange={this.handleOnChange}/>

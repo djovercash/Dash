@@ -60,21 +60,42 @@ class UserUpdateForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.handleSignup}>
-          <input type="text" name="first_name" value={this.state.first_name} onChange={this.handleOnChange} placeholder="First Name" />
-          <input type="text" name="last_name" value={this.state.last_name} onChange={this.handleOnChange} placeholder="Last Name" />
-          <input type="email" name="email" value={this.state.email} onChange={this.handleOnChange} placeholder="Email" />
-          <input type="hometown" name="hometown" value={this.state.hometown} onChange={this.handleOnChange} placeholder="Hometown" />
-          <ReactFilestack
-            apikey={'AO1rF1TdISrSzbwTPEHFez'}
-            buttonText="Select a photo"
-            buttonClass="classname"
-            onSuccess={this.onSuccess}
-          />
-          <input id="submit" type="submit" value="Submit" /><br/>
-        </form>
-        <button onClick={this.deleteAccount}>Delete Account</button>
+      <div className="form">
+        <h3>Update your account by filling out the information below</h3>
+          <div className="updateFormFields">
+            <div className="updateFormFieldInputs">
+              <div>
+                <label>First Name: </label>
+                <input type="text" name="first_name" value={this.state.first_name} onChange={this.handleOnChange} placeholder="First Name" />
+              </div>
+              <div>
+                <label>Last Name: </label>
+                <input type="text" name="last_name" value={this.state.last_name} onChange={this.handleOnChange} placeholder="Last Name" />
+              </div>
+              <div>
+                <label>Email: </label>
+                <input type="email" name="email" value={this.state.email} onChange={this.handleOnChange} placeholder="Email" />
+              </div>
+              <div>
+                <label>Hometown: </label>
+                <input type="hometown" name="hometown" value={this.state.hometown} onChange={this.handleOnChange} placeholder="Hometown" />
+              </div>
+            </div>
+            <div>
+              <div className="updateformFieldInputs">
+                <ReactFilestack
+                  apikey={'AO1rF1TdISrSzbwTPEHFez'}
+                  buttonText="Select a photo"
+                  buttonClass="classname"
+                  onSuccess={this.onSuccess}
+                />
+              </div>
+              <div>
+                <button id="formButton" onClick={this.handleSignup}>Update</button>
+                <button id="DeleteButton" onClick={this.deleteAccount}>Delete Account</button>
+              </div>
+            </div>
+          </div>
       </div>
     )
   }

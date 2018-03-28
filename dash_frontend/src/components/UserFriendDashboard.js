@@ -191,7 +191,7 @@ class UserFriendDashboard extends React.Component{
           <div id="selectedFriendCategory">
             <div className="categorySelect">
             <h4>All Bubbles</h4>
-              <select className="categorySelect" multiple="multiple" name="createCategory" onClick={this.handleOnClickAdd}>
+              <select className="formCategorySelectOption" multiple="multiple" name="createCategory" onClick={this.handleOnClickAdd}>
                 {userSelectedCategories.map(category => {
                   return <option key={category.id} value={category.id}>{category.name}</option>
                 })}
@@ -199,7 +199,7 @@ class UserFriendDashboard extends React.Component{
             </div>
             <div className="categorySelect">
               <h4>Included Bubbles</h4>
-              <select className="categorySelect" multiple="multiple" name="createCategory" onClick={this.handleOnClickRemove}>
+              <select className="formCategorySelectOption" multiple="multiple" name="createCategory" onClick={this.handleOnClickRemove}>
                 {selectedFriendCategories.map(category => {
                   return <option key={category.id} value={category.id}>{category.name}</option>
                 })}

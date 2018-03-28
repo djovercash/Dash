@@ -241,9 +241,14 @@ function rootReducer (state = defaultState, action) {
     case FETCHED_EVENTS:
         return {...state, events: action.payload, isLoading: false};
     case FETCHING_EVENT:
-        return {...state, isLoading: true};
+        return {...state, isLoading: true,
+          createForm: false,
+          findFriends: false,
+          editForm: false,
+          eventfulSearch: false,
+          updateAccount: false};
     case FETCHED_EVENT:
-        return {...state, specific_event: action.payload, isLoading: false, eventfulSearch: false};
+        return {...state, specific_event: action.payload, isLoading: false};
     case FETCHING_EVENTFUL_EVENTS:
         return {...state, isLoading: true};
     case FETCHED_EVENTFUL_EVENTS:

@@ -23,6 +23,12 @@ button:hover {
   background-color: rgb(77, 77, 77);
 }
 
+input {
+  background-color: rgb(217, 217, 217);
+  color: rgb(77, 77, 77);
+  font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+}
+
 #submit {
   color: rgb(77, 77, 77);
   background-color: rgb(64, 224, 208);
@@ -459,6 +465,14 @@ button:hover {
 
 .formCategorySelectOption {
   width: 80%;
+  background-color: rgb(217, 217, 217);
+  color: rgb(77, 77, 77);
+  font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+  outline: none;
+}
+
+.formCategorySelectOption option:hover{
+  background-color: rgb(64, 224, 208)
 }
 
 #BubbleInvite {
@@ -631,4 +645,23 @@ button:hover {
 
 .categoryEventList li:before {
   content: '✓';
+}
+
+#DeleteButton:hover {
+  color: rgb(255, 0, 0);
+  background-color: rgb(77, 77, 77);
+}
+
+.updateFormFields {
+  display: flex;
+  justify-content: center;
+}
+
+.updateFormFieldInputs {
+  margin-right: 5%;
+}
+
+.calendar {
+  background-color: rgb(217, 217, 217);
+  color: rgb(77, 77, 77)
 }
